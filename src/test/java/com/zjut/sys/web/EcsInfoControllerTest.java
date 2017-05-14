@@ -1,6 +1,6 @@
 package com.zjut.sys.web;
 
-import com.zjut.sys.pojo.Ecs;
+import com.zjut.sys.pojo.EcsInfo;
 import com.zjut.sys.service.impl.EcsInfoServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ public class EcsInfoControllerTest {
     private EcsInfoServiceImpl service;
     @Test
     public void getInfo() throws Exception {
-        Ecs ecs=new Ecs();
+        EcsInfo ecs=new EcsInfo();
         ecs = service.getEscInfo("192.168.1.1");
         System.out.println(ecs);
     }

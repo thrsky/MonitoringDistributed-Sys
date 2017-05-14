@@ -1,11 +1,11 @@
 package com.zjut.sys.service;
 
-import com.zjut.sys.pojo.Ecs;
+import com.zjut.sys.pojo.EcsInfo;
 
 /**
  * Created by thRShy on 2017/5/6.
  */
 public interface EcsInfoService {
 
-    public Ecs getEscInfo(String ip);
+    public EcsInfo getEscInfo(String ip);
 }

@@ -1,7 +1,9 @@
 package com.zjut.sys.service.impl;
 
+import com.zjut.sys.dao.EcsInfoMapper;
 import com.zjut.sys.dao.EcsMapper;
 import com.zjut.sys.pojo.Ecs;
+import com.zjut.sys.pojo.EcsInfo;
 import com.zjut.sys.service.EcsInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,9 @@ import org.springframework.stereotype.Service;
 public class EcsInfoServiceImpl implements EcsInfoService {
 
     @Autowired
-    private EcsMapper ecsMapper;
+    private EcsInfoMapper ecsInfoMapper;
 
-    public Ecs getEscInfo(String ip) {
-        return ecsMapper.selectByPrimaryKey(ip);
+    public EcsInfo getEscInfo(String ip) {
+        return ecsInfoMapper.selectEcsInfoByIp(ip);
     }
 }

@@ -53,4 +53,9 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectEcsInfoByIp" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT * from ecs_info
+    where ip = #{ip,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -1,7 +1,9 @@
 package com.zjut.sys.service.impl;
 
+import com.zjut.sys.dao.EcsInfoMapper;
 import com.zjut.sys.dao.EcsMapper;
 import com.zjut.sys.pojo.Ecs;
+import com.zjut.sys.pojo.EcsInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class EcsInfoServiceImplTest {
 
     @Autowired
-    private EcsMapper ecsMapper;
+    private EcsInfoMapper ecsInfoMapper;
     @Test
     public void getEscInfo() throws Exception {
-        Ecs ecs=new Ecs();
-        ecs=ecsMapper.selectByPrimaryKey("192.168.1.1");
+        EcsInfo ecs=new EcsInfo();
+        ecs=ecsInfoMapper.selectEcsInfoByIp("192.168.1.1");
         System.out.println(ecs);
     }
 
