@@ -5,6 +5,9 @@ import java.util.Date;
 public class EcsDetail {
     private String ip;
 
+    /**
+     * 时间戳
+     */
     private Date time;
 
     private Double cpuRate;

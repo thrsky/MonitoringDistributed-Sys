@@ -11,10 +11,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class index {
+public class IndexController {
 
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String index(Model model){
         return "index";
+    }
+
+    @RequestMapping(value = "charts",method = RequestMethod.GET)
+    public String charts(Model model){
+        return "charts";
+    }
+
+    @RequestMapping(value = "serverList",method = RequestMethod.GET)
+    public String serverList(Model model){
+        return "serverList";
     }
 }
