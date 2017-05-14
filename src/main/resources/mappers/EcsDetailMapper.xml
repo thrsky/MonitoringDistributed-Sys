@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjut.sys.dao.EcsDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zjut.sys.pojo.EcsDetail">
+    <constructor>
+      <idArg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="cpu_rate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="net_in" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="net_out" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="ipos" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="memory_rate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="average_load" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="kb_reads" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="kb_writes" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="disk_usage" javaType="java.lang.Double" jdbcType="DOUBLE" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ip, time, cpu_rate, net_in, net_out, ipos, memory_rate, average_load, kb_reads, kb_writes, 
+    disk_usage
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ecs_detail
+    where ip = #{ip,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ecs_detail
+    where ip = #{ip,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zjut.sys.pojo.EcsDetail">
+    insert into ecs_detail (ip, time, cpu_rate, 
+      net_in, net_out, ipos, 
+      memory_rate, average_load, kb_reads, 
+      kb_writes, disk_usage)
+    values (#{ip,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{cpuRate,jdbcType=DOUBLE}, 
+      #{netIn,jdbcType=DOUBLE}, #{netOut,jdbcType=DOUBLE}, #{ipos,jdbcType=INTEGER}, 
+      #{memoryRate,jdbcType=DOUBLE}, #{averageLoad,jdbcType=DOUBLE}, #{kbReads,jdbcType=DOUBLE}, 
+      #{kbWrites,jdbcType=DOUBLE}, #{diskUsage,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zjut.sys.pojo.EcsDetail">
+    insert into ecs_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="cpuRate != null">
+        cpu_rate,
+      </if>
+      <if test="netIn != null">
+        net_in,
+      </if>
+      <if test="netOut != null">
+        net_out,
+      </if>
+      <if test="ipos != null">
+        ipos,
+      </if>
+      <if test="memoryRate != null">
+        memory_rate,
+      </if>
+      <if test="averageLoad != null">
+        average_load,
+      </if>
+      <if test="kbReads != null">
+        kb_reads,
+      </if>
+      <if test="kbWrites != null">
+        kb_writes,
+      </if>
+      <if test="diskUsage != null">
+        disk_usage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpuRate != null">
+        #{cpuRate,jdbcType=DOUBLE},
+      </if>
+      <if test="netIn != null">
+        #{netIn,jdbcType=DOUBLE},
+      </if>
+      <if test="netOut != null">
+        #{netOut,jdbcType=DOUBLE},
+      </if>
+      <if test="ipos != null">
+        #{ipos,jdbcType=INTEGER},
+      </if>
+      <if test="memoryRate != null">
+        #{memoryRate,jdbcType=DOUBLE},
+      </if>
+      <if test="averageLoad != null">
+        #{averageLoad,jdbcType=DOUBLE},
+      </if>
+      <if test="kbReads != null">
+        #{kbReads,jdbcType=DOUBLE},
+      </if>
+      <if test="kbWrites != null">
+        #{kbWrites,jdbcType=DOUBLE},
+      </if>
+      <if test="diskUsage != null">
+        #{diskUsage,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zjut.sys.pojo.EcsDetail">
+    update ecs_detail
+    <set>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpuRate != null">
+        cpu_rate = #{cpuRate,jdbcType=DOUBLE},
+      </if>
+      <if test="netIn != null">
+        net_in = #{netIn,jdbcType=DOUBLE},
+      </if>
+      <if test="netOut != null">
+        net_out = #{netOut,jdbcType=DOUBLE},
+      </if>
+      <if test="ipos != null">
+        ipos = #{ipos,jdbcType=INTEGER},
+      </if>
+      <if test="memoryRate != null">
+        memory_rate = #{memoryRate,jdbcType=DOUBLE},
+      </if>
+      <if test="averageLoad != null">
+        average_load = #{averageLoad,jdbcType=DOUBLE},
+      </if>
+      <if test="kbReads != null">
+        kb_reads = #{kbReads,jdbcType=DOUBLE},
+      </if>
+      <if test="kbWrites != null">
+        kb_writes = #{kbWrites,jdbcType=DOUBLE},
+      </if>
+      <if test="diskUsage != null">
+        disk_usage = #{diskUsage,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ip = #{ip,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zjut.sys.pojo.EcsDetail">
+    update ecs_detail
+    set time = #{time,jdbcType=TIMESTAMP},
+      cpu_rate = #{cpuRate,jdbcType=DOUBLE},
+      net_in = #{netIn,jdbcType=DOUBLE},
+      net_out = #{netOut,jdbcType=DOUBLE},
+      ipos = #{ipos,jdbcType=INTEGER},
+      memory_rate = #{memoryRate,jdbcType=DOUBLE},
+      average_load = #{averageLoad,jdbcType=DOUBLE},
+      kb_reads = #{kbReads,jdbcType=DOUBLE},
+      kb_writes = #{kbWrites,jdbcType=DOUBLE},
+      disk_usage = #{diskUsage,jdbcType=DOUBLE}
+    where ip = #{ip,jdbcType=VARCHAR}
+  </update>
+</mapper>

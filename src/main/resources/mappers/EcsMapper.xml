@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjut.sys.dao.EcsMapper">
+  <resultMap id="BaseResultMap" type="com.zjut.sys.pojo.Ecs">
+    <constructor>
+      <idArg column="ecs_ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ecs_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ecs_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ecs_port" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ecs_last_login" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ecs_desc" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="ecs_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ecs_ip, ecs_name, ecs_password, ecs_port, ecs_last_login, ecs_desc, ecs_create_time, 
+    user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ecs
+    where ecs_ip = #{ecsIp,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ecs
+    where ecs_ip = #{ecsIp,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zjut.sys.pojo.Ecs">
+    insert into ecs (ecs_ip, ecs_name, ecs_password, 
+      ecs_port, ecs_last_login, ecs_desc, 
+      ecs_create_time, user_id)
+    values (#{ecsIp,jdbcType=VARCHAR}, #{ecsName,jdbcType=VARCHAR}, #{ecsPassword,jdbcType=VARCHAR}, 
+      #{ecsPort,jdbcType=INTEGER}, #{ecsLastLogin,jdbcType=VARCHAR}, #{ecsDesc,jdbcType=CHAR}, 
+      #{ecsCreateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zjut.sys.pojo.Ecs">
+    insert into ecs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ecsIp != null">
+        ecs_ip,
+      </if>
+      <if test="ecsName != null">
+        ecs_name,
+      </if>
+      <if test="ecsPassword != null">
+        ecs_password,
+      </if>
+      <if test="ecsPort != null">
+        ecs_port,
+      </if>
+      <if test="ecsLastLogin != null">
+        ecs_last_login,
+      </if>
+      <if test="ecsDesc != null">
+        ecs_desc,
+      </if>
+      <if test="ecsCreateTime != null">
+        ecs_create_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ecsIp != null">
+        #{ecsIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsName != null">
+        #{ecsName,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsPassword != null">
+        #{ecsPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsPort != null">
+        #{ecsPort,jdbcType=INTEGER},
+      </if>
+      <if test="ecsLastLogin != null">
+        #{ecsLastLogin,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsDesc != null">
+        #{ecsDesc,jdbcType=CHAR},
+      </if>
+      <if test="ecsCreateTime != null">
+        #{ecsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zjut.sys.pojo.Ecs">
+    update ecs
+    <set>
+      <if test="ecsName != null">
+        ecs_name = #{ecsName,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsPassword != null">
+        ecs_password = #{ecsPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsPort != null">
+        ecs_port = #{ecsPort,jdbcType=INTEGER},
+      </if>
+      <if test="ecsLastLogin != null">
+        ecs_last_login = #{ecsLastLogin,jdbcType=VARCHAR},
+      </if>
+      <if test="ecsDesc != null">
+        ecs_desc = #{ecsDesc,jdbcType=CHAR},
+      </if>
+      <if test="ecsCreateTime != null">
+        ecs_create_time = #{ecsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ecs_ip = #{ecsIp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zjut.sys.pojo.Ecs">
+    update ecs
+    set ecs_name = #{ecsName,jdbcType=VARCHAR},
+      ecs_password = #{ecsPassword,jdbcType=VARCHAR},
+      ecs_port = #{ecsPort,jdbcType=INTEGER},
+      ecs_last_login = #{ecsLastLogin,jdbcType=VARCHAR},
+      ecs_desc = #{ecsDesc,jdbcType=CHAR},
+      ecs_create_time = #{ecsCreateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where ecs_ip = #{ecsIp,jdbcType=VARCHAR}
+  </update>
+</mapper>
