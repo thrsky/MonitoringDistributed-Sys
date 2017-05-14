@@ -37,15 +37,15 @@
 
                     <div class="col-lg-3">
                         <ul class="list-group">
-                            <li class="list-group-item">节点名称: <span id="text_node_name"></span></li>
-                            <li class="list-group-item">ip地址: <span id="text_ip_address"></span></li>
-                            <li class="list-group-item">操作系统: <span id="text_operation_system"></span></li>
+                            <li class="list-group-item">节点名称: ${server.name}</li>
+                            <li class="list-group-item">ip地址: ${server.ip}</li>
+                            <li class="list-group-item">操作系统: ${server.operation}</li>
                         </ul>
                     </div>
 
                     <div class="col-lg-4">
                         <p>
-                            描述: <span id="text_description"></span>
+                            描述: ${server.description}
                         </p>
                     </div>
 
@@ -76,7 +76,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
-                    <div id="cpu" style="width: 1000px;height:400px;"></div>
+                    <div id="chart" style="width: 1000px;height:400px;"></div>
                 </div>
             </div>
         </div>
@@ -89,17 +89,9 @@
 <%@include file="common/tail.jsp"%>
 <script type="text/javascript">
     $(function () {
-        var serverinfo = {
-            "node_name": "node_1",
-            "ip_address": "127.0.0.1",
-            "operation_system": "windows10",
-            "description": "这是一个描述"
-        }
-        text.load(serverinfo);
-        table.showCpuTable();
-    })
-    $(function () {
-        table.show();
+        table.setIp('${server.ip}');
+        view.showCpuTable();
+        view.show();
     })
 </script>
 

@@ -9,6 +9,8 @@ public class EcsBriefDto {
     private String cpu;
     private String memory;
     private String disk;
+    private String description;
+    private String operation;
     /**
      * 运行状态
      */
@@ -60,5 +62,21 @@ public class EcsBriefDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 }

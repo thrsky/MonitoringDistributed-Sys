@@ -14,23 +14,23 @@
     </form>
     <ul class="nav menu">
         <li>
-            <a href="index">
+            <a href="/index">
                 <svg class="glyph stroked dashboard-dial">
                     <use xlink:href="#stroked-dashboard-dial"></use>
                 </svg>
                 Dashboard
             </a>
         </li>
-        <li class="active">
-            <a href="charts">
-                <svg class="glyph stroked line-graph">
-                    <use xlink:href="#stroked-line-graph"></use>
-                </svg>
-                运行状态
-            </a>
-        </li>
+        <%--<li class="active">--%>
+            <%--<a href="info">--%>
+                <%--<svg class="glyph stroked line-graph">--%>
+                    <%--<use xlink:href="#stroked-line-graph"></use>--%>
+                <%--</svg>--%>
+                <%--运行状态--%>
+            <%--</a>--%>
+        <%--</li>--%>
         <li>
-            <a href="serverList">
+            <a href="/serverList">
                 <svg class="glyph stroked pencil">
                     <use xlink:href="#stroked-pencil"></use>
                 </svg>

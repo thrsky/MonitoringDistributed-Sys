@@ -48,12 +48,12 @@
                         </tr>
                         <tr>
                             <td><input type="checkbox" name=""></td>
-                            <td><a href="#{server.ip}/info">查看监控状态</a></td>
-                            <td>#{server.ip}</td>
-                            <td>#{server.cpu}</td>
-                            <td>#{server.memory}</td>
-                            <td>#{server.disk}</td>
-                            <td><span class="label label-success">#{server.status}</span></td>
+                            <td><a href="${server.ip}/info">查看监控状态</a></td>
+                            <td>${server.ip}</td>
+                            <td>${server.cpu}</td>
+                            <td>${server.memory}</td>
+                            <td>${server.disk}</td>
+                            <td><span class="label label-success">${server.status}</span></td>
                         </tr>
                     </table>
                 </div>
