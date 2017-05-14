@@ -1,6 +1,6 @@
 package com.zjut.sys.web;
 
-import com.zjut.sys.pojo.Ecs;
+import com.zjut.sys.pojo.EcsInfo;
 import com.zjut.sys.service.impl.EcsInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +23,8 @@ public class EcsInfoController {
 
     @GetMapping(value = "/{ip}/info")
     @ResponseBody
-    public String getInfo(@PathVariable("ip") String ip, Model model){
-        Ecs ecs=ecsInfoService.getEscInfo(ip);
-        model.addAttribute("info",ecs);
-        return "info";
+    public EcsInfo getInfo(@PathVariable("ip") String ip, Model model){
+        EcsInfo ecsInfo=ecsInfoService.getEscInfo(ip);
+        return ecsInfo;
     }
 }
