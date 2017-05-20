@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <title>控制台</title>
-    <%@include file="common/head.jsp"%>
+    <%@include file="common/head.jsp" %>
 </head>
 
 <body>
-<%@include file="common/navbar.jsp"%>
-<%@include file="common/sidebar.jsp"%>
+<%@include file="common/navbar.jsp" %>
+<%@include file="common/sidebar.jsp" %>
 
 
 <!--/.sidebar-->
@@ -74,7 +74,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading"></div>
+                <div class="panel-heading">
+                    <button class="btn btn-warning" id="stop_post">stop</button>
+                    <button class="btn btn-warning" id="start_post">start</button>
+                </div>
                 <div class="panel-body">
                     <div id="chart" style="width: 1000px;height:400px;"></div>
                 </div>
@@ -86,11 +89,12 @@
 <!--/.row-->
 
 <!--/.main-->
-<%@include file="common/tail.jsp"%>
+<%@include file="common/tail.jsp" %>
 <script type="text/javascript">
     $(function () {
+        console.log("ru kou");
         table.setIp('${server.ip}');
-        view.showCpuTable();
+        view.showCpuTable(10 * 1000);
         view.show();
     })
 </script>

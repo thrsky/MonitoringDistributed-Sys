@@ -37,5 +37,13 @@
                 服务器列表
             </a>
         </li>
+        <li>
+            <a href="/serverList">
+                <svg class="glyph stroked pencil">
+                    <use xlink:href="#stroked-pencil"></use>
+                </svg>
+                告警设置
+            </a>
+        </li>
     </ul>
 </div>

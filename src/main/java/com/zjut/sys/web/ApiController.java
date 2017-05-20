@@ -52,7 +52,7 @@ public class ApiController {
         for (int i = 0; i < 1; i++) {
             CpuDto cpuDto = new CpuDto();
             cpuDto.setTime(new Date());
-            cpuDto.setUsage(Math.random());
+            cpuDto.setUsage(0.1+Math.random()/20);
             list.add(cpuDto);
         }
         return list;

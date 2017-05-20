@@ -21,4 +21,8 @@ public class EcsInfoServiceImpl implements EcsInfoService {
     public EcsInfo getEscInfo(String ip) {
         return ecsInfoMapper.selectEcsInfoByIp(ip);
     }
+
+    public Boolean getEscStatus(String ip) {
+        return null;
+    }
 }
