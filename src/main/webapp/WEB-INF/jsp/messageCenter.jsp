@@ -5,12 +5,16 @@
   Time: 上午9:59
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Title</title>
+    <%@include file="common/head.jsp"%>
 </head>
 <body>
-$END$
+<%@include file="common/navbar.jsp"%>
+<%@include file="common/sidebar.jsp"%>
+
 </body>
 </html>

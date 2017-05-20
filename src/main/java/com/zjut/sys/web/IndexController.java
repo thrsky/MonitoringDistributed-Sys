@@ -70,4 +70,10 @@ public class IndexController {
         return "serverList";
     }
 
+    @RequestMapping(value = "messageCenter",method = RequestMethod.GET)
+    public String messageCenter(Model model){
+
+        return "messageCenter";
+    }
+
 }

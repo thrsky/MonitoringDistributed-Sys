@@ -38,7 +38,7 @@
             </a>
         </li>
         <li>
-            <a href="/serverList">
+            <a href="/messageCenter">
                 <svg class="glyph stroked pencil">
                     <use xlink:href="#stroked-pencil"></use>
                 </svg>
