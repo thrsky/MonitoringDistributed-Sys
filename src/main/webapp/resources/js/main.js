@@ -152,14 +152,14 @@ var table = {
             xAxis: {
                 type: 'time',
                 splitLine: {
-                    show: true
+                    show: false
                 }
             },
             yAxis: {
                 type: 'value',
-                boundaryGap: [0, '100%'],
+                // boundaryGap: [0, '100%'],
                 splitLine: {
-                    show: true
+                    show: false
                 }
             },
             series: [{

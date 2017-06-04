@@ -53,7 +53,6 @@ public class ApiController {
                                 @PathVariable("timetype") String timetype,
                                 @PathVariable("num") String num,
                                 Model model) {
-
         List<CpuDto> list = new ArrayList<CpuDto>();
         for (int i = 0; i < 1; i++) {
             CpuDto cpuDto = new CpuDto();
