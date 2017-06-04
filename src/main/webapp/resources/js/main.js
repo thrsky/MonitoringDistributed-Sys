@@ -6,7 +6,7 @@ var table = {
     data: [],
     stopId: null,
     //默认为50个数据
-    dataLimitCount:50,
+    dataLimitCount: 50,
     getChart: function (divId) {
         table.chart = echarts.init(document.getElementById(divId));
         table.chart.showLoading();
@@ -35,9 +35,9 @@ var table = {
      *自动get获取数据
      */
     start: function (time) {
-        if(time==null){
+        if (time == null) {
             console.log('time is null');
-            time=2000;
+            time = 2000;
         }
         table.stopId = setInterval(function () {
             table.getData(1, 1, 1);
@@ -77,7 +77,7 @@ var table = {
                     ]
                 };
                 while (table.data.length > table.dataLimitCount) {
-                    console.log("data size:"+table.data.length);
+                    console.log("data size:" + table.data.length);
                     table.data.shift();
                 }
                 table.data.push(tdata);
@@ -176,7 +176,7 @@ var table = {
         myChart.hideLoading();
         myChart.setOption(option);
         table.start();
-    },
+    }
 }
 var view = {
     showCpuTable: function () {
@@ -208,5 +208,13 @@ var view = {
         $('#start_post').click(function () {
             table.start();
         });
+    }
+}
+var text = {
+    setMaxUsage: function (type) {
+        $.get("url", {}, function (result) {
+            $("#max_usage").text(result);
+            $("#max_usage").text(result);
+        })
     }
 }

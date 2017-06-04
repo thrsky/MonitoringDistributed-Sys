@@ -4,7 +4,10 @@ import com.zjut.sys.dto.CpuDto;
 import com.zjut.sys.dto.DiskDto;
 import com.zjut.sys.dto.MemoryDto;
 import com.zjut.sys.pojo.EcsInfo;
+import com.zjut.sys.pojo.WarnMessage;
+import com.zjut.sys.service.MessageCenterService;
 import com.zjut.sys.service.impl.EcsInfoServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +24,15 @@ import java.util.List;
  * Created by thRShy on 2017/5/6.
  */
 @Controller
+@Slf4j
 @RequestMapping("/api")
 public class ApiController {
 
 
     @Autowired
     private EcsInfoServiceImpl ecsInfoService;
+    @Autowired
+    private MessageCenterService messageCenterService;
 
     @GetMapping(value = "/{ip}/info")
     @ResponseBody
@@ -52,7 +58,7 @@ public class ApiController {
         for (int i = 0; i < 1; i++) {
             CpuDto cpuDto = new CpuDto();
             cpuDto.setTime(new Date());
-            cpuDto.setUsage(0.1+Math.random()/20);
+            cpuDto.setUsage(0.1 + Math.random() / 20);
             list.add(cpuDto);
         }
         return list;
@@ -85,4 +91,15 @@ public class ApiController {
         return null;
     }
 
+    @GetMapping(value = "warnMessage/{id}")
+    @ResponseBody
+    public WarnMessage getWarnMessageById(@PathVariable("id") long id) {
+        return messageCenterService.findById(id);
+    }
+
+    @GetMapping(value = "warnMessage/update")
+    public void updateWarnMessage(WarnMessage warnMessage) {
+        log.info("warnMessage={}",warnMessage);
+//        return ""
+    }
 }

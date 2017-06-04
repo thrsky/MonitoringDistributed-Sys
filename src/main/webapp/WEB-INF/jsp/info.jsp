@@ -84,6 +84,22 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-log-12">
+            <table class="table">
+                <tr>
+                    <td>当前使用率</td>
+                    <td>最高使用率</td>
+                </tr>
+                <tr>
+                    <td><p id="current_usage">s</p></td>
+                    <td><p id="max_usage">s</p></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </div>
 
 <!--/.row-->
@@ -92,10 +108,12 @@
 <%@include file="common/tail.jsp" %>
 <script type="text/javascript">
     $(function () {
+        text.setMaxUsage("hello");
         console.log("ru kou");
         table.setIp('${server.ip}');
         view.showCpuTable(10 * 1000);
         view.show();
+
     })
 </script>
 

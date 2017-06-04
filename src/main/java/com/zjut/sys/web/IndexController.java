@@ -1,6 +1,9 @@
 package com.zjut.sys.web;
 
 import com.zjut.sys.dto.EcsBriefDto;
+import com.zjut.sys.pojo.WarnMessage;
+import com.zjut.sys.service.MessageCenterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class IndexController {
+    @Autowired
+    MessageCenterService messageCenterService;
 
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String index(Model model){
@@ -72,7 +77,8 @@ public class IndexController {
 
     @RequestMapping(value = "messageCenter",method = RequestMethod.GET)
     public String messageCenter(Model model){
-
+        List<WarnMessage> warnMessageList = messageCenterService.getWarnMessages();
+        model.addAttribute(warnMessageList);
         return "messageCenter";
     }
 
