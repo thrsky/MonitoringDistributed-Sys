@@ -1,5 +1,7 @@
 package com.zjut.sys.web;
 
+import com.zjut.sys.dao.getCpuData;
+import com.zjut.sys.dao.impl.getCpuDataImpl;
 import com.zjut.sys.dto.CpuDto;
 import com.zjut.sys.dto.DiskDto;
 import com.zjut.sys.dto.MemoryDto;
@@ -63,16 +65,22 @@ public class ApiController {
         return list;
     }
 
-    @GetMapping(value = "{ip}/cpu/info/{num}/{timetype}")
+    @GetMapping(value = "/{ip}/cpu/info/{mode}")
     @ResponseBody
     public List<CpuDto> getCpuData(@PathVariable("ip") String ip,
-                                   @PathVariable("num") String num,
-                                   @PathVariable("timetype") String timetype
-    ) {
-        return null;
+                                   @PathVariable("mode") String mode){
+        List<CpuDto> res = new ArrayList<CpuDto>(15);
+        getCpuData getCpuData=new getCpuDataImpl();
+        if(mode.equals("15minutes")){
+            res=getCpuData.get15MinCpu(ip);
+        }else if(mode=="1days"){
+            //TODO
+        }
+        return res;
     }
 
-    @GetMapping(value = "{ip}/memory/info/{num}/{timetype}")
+
+    @GetMapping(value = "/{ip}/memory/info/{num}/{timetype}")
     @ResponseBody
     public List<MemoryDto> getMemoryData(@PathVariable("ip") String ip,
                                          @PathVariable("num") String num,
@@ -81,7 +89,7 @@ public class ApiController {
         return null;
     }
 
-    @GetMapping(value = "{ip}/disk/info/{num}/{timetype}")
+    @GetMapping(value = "/{ip}/disk/info/{num}/{timetype}")
     @ResponseBody
     public List<DiskDto> getDiskData(@PathVariable("ip") String ip,
                                      @PathVariable("num") String num,

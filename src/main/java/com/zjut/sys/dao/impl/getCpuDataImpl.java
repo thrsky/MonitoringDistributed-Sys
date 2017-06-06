@@ -5,6 +5,7 @@ import com.zjut.sys.dto.CpuDto;
 import com.zjut.sys.utils.getInfoFromData;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class getCpuDataImpl implements getCpuData {
     @Autowired
     private getDataImpl getData=new getDataImpl();
 
-    public CpuDto[] get1DaysCpu(String ip) {
+    public List<CpuDto> get1DaysCpu(String ip) {
         //TODO
         return null;
     }
@@ -25,25 +26,19 @@ public class getCpuDataImpl implements getCpuData {
      * @param ip
      * @return
      */
-    public CpuDto[] get15MinCpu(String ip) {
+    public List<CpuDto> get15MinCpu(String ip) {
         List<String> data= getData.get15Minutes(ip);
-        CpuDto[] res=new CpuDto[15];
+        List<CpuDto> res = new ArrayList<CpuDto>(15);
         CpuDto cpuDto=null;
-        for(int i=0;i<15;i++){
+        for(int i=0;i<data.size();i++){
             cpuDto=new CpuDto();
             cpuDto.setUsage(getInfoFromData.getCpuFromData(data.get(i)));
             cpuDto.setTime(getInfoFromData.getDateFromData(data.get(i)));
-            res[i]=cpuDto;
+            res.add(cpuDto);
+//            res[i]=cpuDto;
         }
         return res;
     }
 
-    public static void main(String[] args) {
-        getCpuDataImpl getCpuData=new getCpuDataImpl();
-        CpuDto[] res=getCpuData.get15MinCpu("115.159.206.169");
-        System.out.println(res[3]);
-        System.out.println(res[13]);
-        System.out.println(res[14]);
-    }
 
 }

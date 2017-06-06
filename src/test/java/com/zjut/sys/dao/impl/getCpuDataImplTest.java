@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by thRShy on 2017/6/6.
@@ -20,7 +21,7 @@ public class getCpuDataImplTest {
     private getCpuDataImpl getCpuData;
     @Test
     public void get15MinCpu() throws Exception {
-        CpuDto[] res=getCpuData.get15MinCpu("115.159.206.169");
+        List<CpuDto> res=getCpuData.get15MinCpu("115.159.206.169");
         System.out.println(res);
 
     }
