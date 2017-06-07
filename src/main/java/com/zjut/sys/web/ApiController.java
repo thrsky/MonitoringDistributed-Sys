@@ -102,7 +102,7 @@ public class ApiController {
         return res;
     }
 
-    @GetMapping(value = "{ip}/net/info/reseive/{mode}")
+    @GetMapping(value = "{ip}/net/info/receive/{mode}")
     @ResponseBody
     public List<netInDto> getNetInData(@PathVariable("ip")String ip,
                                        @PathVariable("mode")String mode){
