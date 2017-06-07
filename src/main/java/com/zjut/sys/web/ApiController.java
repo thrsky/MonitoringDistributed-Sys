@@ -1,10 +1,7 @@
 package com.zjut.sys.web;
 
 import com.zjut.sys.dao.getCpuData;
-import com.zjut.sys.dao.impl.getCpuDataImpl;
-import com.zjut.sys.dao.impl.getDiskImpl;
-import com.zjut.sys.dao.impl.getMemoryImpl;
-import com.zjut.sys.dao.impl.getNetImpl;
+import com.zjut.sys.dao.impl.*;
 import com.zjut.sys.dto.*;
 import com.zjut.sys.pojo.EcsInfo;
 import com.zjut.sys.pojo.WarnMessage;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,25 +40,23 @@ public class ApiController {
     }
 
     /**
+     *  系统负载
      * @param ip
-     * @param model
+     * @param mode
      * @return
      */
-    @GetMapping(value = "{ip}/{type}/info/{num}/{timetype}")
+    @GetMapping(value = "{ip}/sysLoad/info/{mode}")
     @ResponseBody
-    public List<CpuDto> getData(@PathVariable("ip") String ip,
-                                @PathVariable("type") String type,
-                                @PathVariable("timetype") String timetype,
-                                @PathVariable("num") String num,
-                                Model model) {
-        List<CpuDto> list = new ArrayList<CpuDto>();
-        for (int i = 0; i < 1; i++) {
-            CpuDto cpuDto = new CpuDto();
-            cpuDto.setTime(new Date());
-            cpuDto.setUsage(0.1 + Math.random() / 20);
-            list.add(cpuDto);
+    public List<SysLoadAverageDto> getSysLoadAverage(@PathVariable("ip") String ip,
+                                               @PathVariable("mode") String mode){
+        List<SysLoadAverageDto> res=null;
+        getSysLoadAverageImpl getSysLoadAverage=new getSysLoadAverageImpl();
+        if(mode.equals("15minutes")){
+            res=getSysLoadAverage.get15minutesSysLoad(ip);
+        }else if(mode.equals("OneDay")){
+            res=getSysLoadAverage.getOneDaySysLoad(ip);
         }
-        return list;
+        return res;
     }
 
     /**
@@ -87,6 +80,12 @@ public class ApiController {
     }
 
 
+    /**
+     * 内存
+     * @param ip
+     * @param mode
+     * @return
+     */
     @GetMapping(value = "/{ip}/memory/info/{mode}")
     @ResponseBody
     public List<MemoryDto> getMemoryData(@PathVariable("ip") String ip,
@@ -102,6 +101,12 @@ public class ApiController {
         return res;
     }
 
+    /**
+     * net receive
+     * @param ip
+     * @param mode
+     * @return
+     */
     @GetMapping(value = "{ip}/net/info/receive/{mode}")
     @ResponseBody
     public List<netInDto> getNetInData(@PathVariable("ip")String ip,
@@ -116,6 +121,12 @@ public class ApiController {
         return res;
     }
 
+    /**
+     * net send
+     * @param ip
+     * @param mode
+     * @return
+     */
     @GetMapping(value = "{ip}/net/info/send/{mode}")
     @ResponseBody
     public List<netOutDto> getNetOutData(@PathVariable("ip") String ip,
@@ -129,6 +140,7 @@ public class ApiController {
         }
         return res;
     }
+
 
     @GetMapping(value = "{ip}/disk/info/read/{mode}")
     @ResponseBody
