@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,13 +27,27 @@ public class getDataImpl implements getData {
         return res;
     }
 
+    /**
+     *  获取一天时间内的服务器数据 - 可运行
+     * @param ip
+     * @return
+     */
     public List<String> getOneDayData(String ip) {
+        List<String> res= new ArrayList<String>() ;
         try{
             jedis= redisUtil.getJedis();
         }catch (Exception e){
             logger.error(redisValue.REDIS_ERROR.getData());
         }
-        List<String> res=null;
+        String data;
+        for(int i=0;i<24*60;i=i+10){
+            data=jedis.lindex(ip,i);
+            if(data!=null)
+                res.add(data);
+            else{
+//                System.out.println("index is: "+i+" not found");
+            }
+        }
         return res;
     }
 
@@ -44,4 +59,13 @@ public class getDataImpl implements getData {
         return null;
     }
 
+    public static void main(String[] args) {
+        String ip="115.159.206.169";
+        getDataImpl getData=new getDataImpl();
+        List<String> res=getData.getOneDayData(ip);
+        System.out.println(res.size());
+        for(String r:res){
+            System.out.println(r);
+        }
+    }
 }
