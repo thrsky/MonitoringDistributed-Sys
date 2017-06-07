@@ -1,6 +1,6 @@
 package com.zjut.sys.utils;
 
-import com.zjut.sys.dto.MemoryDto;
+import com.zjut.sys.dto.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,15 +18,16 @@ public class getInfoFromData {
      * @param data
      * @return
      */
-    public static double getCpuFromData(String data){
+    public static CpuDto getCpuFromData(String data){
         String expr="cpuUsedRate=(.*?),";
-        double res=0.0;
+        CpuDto cpuDto=null;
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
-            res=Double.parseDouble(matcher.group(1));
+            cpuDto.setUsage(Double.parseDouble(matcher.group(1)));
+            cpuDto.setTime(getDateFromData(data));
         }
-        return res;
+        return cpuDto;
 
     }
 
@@ -60,6 +61,55 @@ public class getInfoFromData {
         }
         return memoryDto;
     }
+
+    public static netInDto getNetInFromData(String data){
+        netInDto netInDto=null;
+        String expr="netReceive_kbps=(.*?),";
+        Pattern pattern=Pattern.compile(expr);
+        Matcher matcher=pattern.matcher(data);
+        if(matcher.find()){
+            netInDto.setNetIn(Double.parseDouble(matcher.group(1)));
+            netInDto.setDate(getDateFromData(data));
+        }
+        return netInDto;
+    }
+
+    public static netOutDto getNetOutFromData(String data){
+        netOutDto netOutDto=null;
+        String expr="netSend_kbps=(.*?),";
+        Pattern pattern=Pattern.compile(expr);
+        Matcher matcher=pattern.matcher(data);
+        if(matcher.find()){
+            netOutDto.setNetOut(Double.parseDouble(matcher.group(1)));
+            netOutDto.setDate(getDateFromData(data));
+        }
+        return netOutDto;
+    }
+
+    public static DiskReadDto getDiskReadFromData(String data){
+        DiskReadDto diskReadDto=null;
+        String expr="diskRead_kbps=(.*?),";
+        Pattern pattern=Pattern.compile(expr);
+        Matcher matcher=pattern.matcher(data);
+        if(matcher.find()){
+            diskReadDto.setRead(Double.parseDouble(matcher.group(1)));
+            diskReadDto.setDate(getDateFromData(data));
+        }
+        return diskReadDto;
+    }
+
+    public static DiskWriteDto getDiskWriteFromData(String data){
+        DiskWriteDto diskWriteDto=null;
+        String expr="diskWrite_kbps=(.*?),";
+        Pattern pattern=Pattern.compile(expr);
+        Matcher matcher=pattern.matcher(data);
+        if(matcher.find()){
+            diskWriteDto.setWrite(Double.parseDouble(matcher.group(1)));
+            diskWriteDto.setDate(getDateFromData(data));
+        }
+        return diskWriteDto;
+    }
+
 
     public static void main(String[] args) {
         String data="MonitorData{SystemLoadAverage=0.2, ip='115.159.206.169', osName='Linux', memTotal=0.97, memUsed=0.9, cpuUsedRate=0.02, diskCapacityTotal=19, diskCapacityUsed=10, diskRead_kbps=0, diskWrite_kbps=0, netReceive_kbps=21, netSend_kbps=17, date=2017-06-06 18:46:17.122}";

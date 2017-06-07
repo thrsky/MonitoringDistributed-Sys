@@ -18,7 +18,14 @@ public class getCpuDataImpl implements getCpuData {
 
     public List<CpuDto> get1DaysCpu(String ip) {
         //TODO
-        return null;
+        List<String> data=getData.getOneDayData(ip);
+        List<CpuDto> res=new ArrayList<CpuDto>(144);
+        CpuDto cpuDto=null;
+        for(String da:data){
+            cpuDto=getInfoFromData.getCpuFromData(da);
+            res.add(cpuDto);
+        }
+        return res;
     }
 
     /**
@@ -30,15 +37,11 @@ public class getCpuDataImpl implements getCpuData {
         List<String> data= getData.get15Minutes(ip);
         List<CpuDto> res = new ArrayList<CpuDto>(15);
         CpuDto cpuDto=null;
-        for(int i=0;i<data.size();i++){
-            cpuDto=new CpuDto();
-            cpuDto.setUsage(getInfoFromData.getCpuFromData(data.get(i)));
-            cpuDto.setTime(getInfoFromData.getDateFromData(data.get(i)));
+        for(String da:data){
+            cpuDto=getInfoFromData.getCpuFromData(da);
             res.add(cpuDto);
-//            res[i]=cpuDto;
         }
         return res;
     }
-
 
 }

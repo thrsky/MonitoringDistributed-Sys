@@ -2,9 +2,10 @@ package com.zjut.sys.web;
 
 import com.zjut.sys.dao.getCpuData;
 import com.zjut.sys.dao.impl.getCpuDataImpl;
-import com.zjut.sys.dto.CpuDto;
-import com.zjut.sys.dto.DiskDto;
-import com.zjut.sys.dto.MemoryDto;
+import com.zjut.sys.dao.impl.getDiskImpl;
+import com.zjut.sys.dao.impl.getMemoryImpl;
+import com.zjut.sys.dao.impl.getNetImpl;
+import com.zjut.sys.dto.*;
 import com.zjut.sys.pojo.EcsInfo;
 import com.zjut.sys.pojo.WarnMessage;
 import com.zjut.sys.service.MessageCenterService;
@@ -65,38 +66,98 @@ public class ApiController {
         return list;
     }
 
+    /**
+     * CPU相关接口
+     * @param ip
+     * @param mode
+     * @return
+     */
     @GetMapping(value = "/{ip}/cpu/info/{mode}")
     @ResponseBody
     public List<CpuDto> getCpuData(@PathVariable("ip") String ip,
                                    @PathVariable("mode") String mode){
-        List<CpuDto> res = new ArrayList<CpuDto>(15);
+        List<CpuDto> res = null;
         getCpuData getCpuData=new getCpuDataImpl();
         if(mode.equals("15minutes")){
             res=getCpuData.get15MinCpu(ip);
-        }else if(mode=="1days"){
-            //TODO
+        }else if(mode.equals("OneDay")){
+            res=getCpuData.get1DaysCpu(ip);
         }
         return res;
     }
 
 
-    @GetMapping(value = "/{ip}/memory/info/{num}/{timetype}")
+    @GetMapping(value = "/{ip}/memory/info/{mode}")
     @ResponseBody
     public List<MemoryDto> getMemoryData(@PathVariable("ip") String ip,
-                                         @PathVariable("num") String num,
-                                         @PathVariable("timetype") String timetype
+                                         @PathVariable("mode") String mode
     ) {
-        return null;
+        List<MemoryDto> res=null;
+        getMemoryImpl getMemory=new getMemoryImpl();
+        if(mode.equals("15minutes")){
+            res=getMemory.get15MinMen(ip);
+        }else if(mode.equals("OneDay")){
+            res=getMemory.get1Day(ip);
+        }
+        return res;
     }
 
-    @GetMapping(value = "/{ip}/disk/info/{num}/{timetype}")
+    @GetMapping(value = "{ip}/net/info/reseive/{mode}")
     @ResponseBody
-    public List<DiskDto> getDiskData(@PathVariable("ip") String ip,
-                                     @PathVariable("num") String num,
-                                     @PathVariable("timetype") String timetype
-    ) {
-        return null;
+    public List<netInDto> getNetInData(@PathVariable("ip")String ip,
+                                       @PathVariable("mode")String mode){
+        getNetImpl getNet=new getNetImpl();
+        List<netInDto> res=null;
+        if(mode.equals("15minutes")){
+            res=getNet.get15MinuteNetIn(ip);
+        }else if(mode.equals("OneDay")){
+            res=getNet.getOneDayNetIn(ip);
+        }
+        return res;
     }
+
+    @GetMapping(value = "{ip}/net/info/send/{mode}")
+    @ResponseBody
+    public List<netOutDto> getNetOutData(@PathVariable("ip") String ip,
+                                         @PathVariable("mode") String mode){
+        getNetImpl getNet=new getNetImpl();
+        List<netOutDto> res=null;
+        if(mode.equals("15minutes")){
+            res=getNet.get15MinuteNetOut(ip);
+        }else if(mode.equals("OneDay")){
+            res=getNet.getOneDayNetOut(ip);
+        }
+        return res;
+    }
+
+    @GetMapping(value = "{ip}/disk/info/read/{mode}")
+    @ResponseBody
+    public List<DiskReadDto> getDiskReadData(@PathVariable("ip") String ip,
+                                            @PathVariable("mode") String mode){
+        getDiskImpl getDisk=new getDiskImpl();
+        List<DiskReadDto> res=null;
+        if(mode.equals("15minutes")){
+            res= getDisk.get15minuteDiskRead(ip);
+        }else if(mode.equals("OneDay")){
+            res=getDisk.getOneDayDiskRead(ip);
+        }
+        return res;
+    }
+
+    @GetMapping(value = "{ip}/disk/info/write/{mode}")
+    @ResponseBody
+    public List<DiskWriteDto> getDiskWriteData(@PathVariable("ip") String ip,
+                                              @PathVariable("mode") String mode){
+        getDiskImpl getDisk=new getDiskImpl();
+        List<DiskWriteDto> res=null;
+        if(mode.equals("15minutes")){
+            res=getDisk.get15minuteDiskWrite(ip);
+        }else if(mode.equals("OneDay")){
+            res=getDisk.getOneDayDiskWrite(ip);
+        }
+        return res;
+    }
+
 
     @GetMapping(value = "warnMessage/{id}")
     @ResponseBody

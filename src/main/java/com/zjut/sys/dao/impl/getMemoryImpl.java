@@ -23,7 +23,6 @@ public class getMemoryImpl implements getMemory {
         List<MemoryDto> res=new ArrayList<MemoryDto>();
         MemoryDto memoryDto;
         for(int i=0;i<data.size();i++){
-            memoryDto=new MemoryDto();
             memoryDto=getMemFromData(data.get(i));
             res.add(memoryDto);
         }
@@ -31,6 +30,13 @@ public class getMemoryImpl implements getMemory {
     }
 
     public List<MemoryDto> get1Day(String ip) {
-        return null;
+        List<String> data=getData.getOneDayData(ip);
+        List<MemoryDto> res=new ArrayList<MemoryDto>(144);
+        MemoryDto memoryDto;
+        for(String da:data){
+            memoryDto=getMemFromData(da);
+            res.add(memoryDto);
+        }
+        return res;
     }
 }
