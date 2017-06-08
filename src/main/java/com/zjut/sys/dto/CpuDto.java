@@ -24,4 +24,12 @@ public class CpuDto {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "CpuDto{" +
+                "time=" + time +
+                ", usage=" + usage +
+                '}';
+    }
 }
