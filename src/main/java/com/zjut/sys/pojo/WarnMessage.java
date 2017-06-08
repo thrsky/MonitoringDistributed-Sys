@@ -10,11 +10,13 @@ import lombok.Data;
 public class WarnMessage {
     long id;
     String title;
-    //暂时只支持cpu
+
     //告警线 百分比的形式:13.9%
     double warnLine;
     int type;
     boolean status;
+    String item;
+    String email;
 
     public static enum TYPE {
         larger(1),
