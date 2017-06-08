@@ -5,5 +5,26 @@
         select * from warn_message
         where id = #{id}
     </select>
+    <insert id="create">
+        insert into warn_message
+        (title,warn_line,type,item,email)
+        values(#{title},#{warnLine},#{type},#{item},#{email})
+    </insert>
+    <update id="update">
+        UPDATE warn_message
+        set title=#{title}
+        ,warn_line=#{warnLine}
+        ,type=#{type}
+        ,item=#{item}
+        ,email=#{email}
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from warn_message
+        WHERE id = #{id}
+    </delete>
+    <select id="getAll" resultType="WarnMessage">
+        select * from warn_message
+    </select>
 
 </mapper>

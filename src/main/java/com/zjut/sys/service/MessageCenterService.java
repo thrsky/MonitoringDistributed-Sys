@@ -9,12 +9,18 @@ import java.util.List;
  * Created by xjy on 2017/5/15.
  */
 public interface MessageCenterService {
-    public boolean sendEmail(String email, String msg);
+    boolean sendEmail(String email, String msg);
 
-    public boolean sendSms(String phone, String msg);
+    boolean sendSms(String phone, String msg);
 
-    public List<WarnMessage> getWarnMessages();
+    List<WarnMessage> getWarnMessages();
 
-    public WarnMessage findById(long id);
+    WarnMessage findById(long id);
+
+    boolean updateWarnMessage(WarnMessage warnMessage);
+
+    boolean deleteWarnMessage(long id);
+
+    long create(WarnMessage warnMessage);
 
 }

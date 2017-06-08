@@ -44,20 +44,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td><a type="button" class="warnMessageBtn" id="13" data-toggle="modal"
-                               data-target="#myModal">
-                            编辑
-                        </a>|<a>删除</a></td>
-                    </tr>
-
                     <c:forEach items="${list}" var="item">
                         <tr>
                             <th scope="row">${item.id}</th>
                             <td>${item.title}</td>
-                            <td><a type="button" class="warnMessageBtn" id="${item.id}" data-toggle="modal"
+                            <td><a type="button" class="warnMessageBtnUpdate" id="${item.id}" data-toggle="modal"
                                    data-target="#myModal">
                                 编辑
                             </a>|<a>删除</a></td>
@@ -84,17 +75,22 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">编辑告警规则</h4>
+                        <h4 class="modal-title">告警规则</h4>
                     </div>
                     <div class="modal-body">
-
+                        <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">id</label>--%>
+                            <%--<div class="col-sm-10">--%>
+                                <input type="hidden" name="id" id="modal_id"/>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="modal_title" name="title" placeholder="title">
                             </div>
                         </div>
-                        <div class="form-group">\
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">监控项目</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="item" id="modal_monitor_type">
@@ -118,12 +114,13 @@
                                 <input type="text" name="warnLine" class="form-control" id="modal_percentage">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">百分比</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="id" id="modal_id"/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发送到该邮箱</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="email" class="form-control" id="modal_email">
+                                </div>
                             </div>
-                        </div>
+
 
 
                     </div>
@@ -155,7 +152,7 @@
     </div>
 </body>
 <script>
-    $(".warnMessageBtn").click(function () {
+    $(".warnMessageBtnUpdate").click(function () {
         console.log($(this).attr('id'));
         var id = $(this).attr('id');
         $.get('/api/warnMessage/' + id, {}, function (result) {
@@ -165,9 +162,9 @@
             $('#modal_percentage').val(result.warnLine);
             $('#modal_monitor_type').val("cpu");
             $('#modal_type').val(result.type);
+            $('#modal_email').val(result.email);
             $('#modal_form').attr('action','/api/warnMessage/update');
         })
-
     });
 </script>
 

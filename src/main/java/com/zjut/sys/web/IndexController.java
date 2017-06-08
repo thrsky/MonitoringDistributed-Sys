@@ -78,7 +78,7 @@ public class IndexController {
     @RequestMapping(value = "messageCenter",method = RequestMethod.GET)
     public String messageCenter(Model model){
         List<WarnMessage> warnMessageList = messageCenterService.getWarnMessages();
-        model.addAttribute(warnMessageList);
+        model.addAttribute("list",warnMessageList);
         return "messageCenter";
     }
 

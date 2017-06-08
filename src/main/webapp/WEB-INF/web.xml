@@ -6,20 +6,23 @@
          metadata-complete="true">
 
 
-<display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
-<servlet>
-  <servlet-name>sys-dispatcher</servlet-name>
-  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-  <!-- 配置SpringMVC需要加载的配置文件 -->
-  <init-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/spring-*.xml</param-value>
-  </init-param>
-</servlet>
-<servlet-mapping>
-  <servlet-name>sys-dispatcher</servlet-name>
-  <!-- 默认匹配所有请求 -->
-  <url-pattern>/</url-pattern>
-</servlet-mapping>
+    <servlet>
+        <servlet-name>sys-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 配置SpringMVC需要加载的配置文件 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-*.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sys-dispatcher</servlet-name>
+        <!-- 默认匹配所有请求 -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <listener>
+        <listener-class>com.zjut.sys.util.TimerListener</listener-class>
+    </listener>
 </web-app>
