@@ -5,6 +5,7 @@ import com.zjut.sys.dto.DiskReadDto;
 import com.zjut.sys.dto.DiskWriteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.zjut.sys.utils.getInfoFromData.getDiskReadFromData;
@@ -23,6 +24,8 @@ public class getDiskImpl implements getDisk {
     DiskWriteDto writeDto;
     DiskReadDto readDto;
     public List<DiskWriteDto> get15minuteDiskWrite(String ip) {
+        getData=new getDataImpl();
+        diskWriteDtos=new ArrayList<DiskWriteDto>(15);
         data=getData.get15Minutes(ip);
         for(String da:data){
             writeDto=getDiskWriteFromData(da);
@@ -32,6 +35,8 @@ public class getDiskImpl implements getDisk {
     }
 
     public List<DiskReadDto> get15minuteDiskRead(String ip) {
+        getData=new getDataImpl();
+        diskReadDtos=new ArrayList<DiskReadDto>(15);
         data=getData.get15Minutes(ip);
         for(String da:data){
             readDto=getDiskReadFromData(da);
@@ -41,6 +46,9 @@ public class getDiskImpl implements getDisk {
     }
 
     public List<DiskWriteDto> getOneDayDiskWrite(String ip) {
+        getData=new getDataImpl();
+        diskWriteDtos=new ArrayList<DiskWriteDto>(144);
+        getData=new getDataImpl();
         data=getData.getOneDayData(ip);
         for(String s:data){
             writeDto=getDiskWriteFromData(s);
@@ -50,6 +58,9 @@ public class getDiskImpl implements getDisk {
     }
 
     public List<DiskReadDto> getOneDayDiskRead(String ip) {
+        getData=new getDataImpl();
+        diskReadDtos=new ArrayList<DiskReadDto>(144);
+        getData=new getDataImpl();
         data=getData.getOneDayData(ip);
         for(String s:data){
             readDto=getDiskReadFromData(s);

@@ -2,8 +2,8 @@ package com.zjut.sys.dao.impl;
 
 import com.zjut.sys.dao.getSysLoadAverage;
 import com.zjut.sys.dto.SysLoadAverageDto;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.zjut.sys.utils.getInfoFromData.getSysLoadFromData;
@@ -14,8 +14,7 @@ import static com.zjut.sys.utils.getInfoFromData.getSysLoadFromData;
  */
 public class getSysLoadAverageImpl  implements getSysLoadAverage {
 
-    @Autowired
-    private getDataImpl getData;
+    private static getDataImpl getData=new getDataImpl();
     List<SysLoadAverageDto> loadAverageDtos;
     SysLoadAverageDto averageDto;
     List<String> data=null;
@@ -30,9 +29,10 @@ public class getSysLoadAverageImpl  implements getSysLoadAverage {
     }
 
     public List<SysLoadAverageDto> getOneDaySysLoad(String ip) {
+        loadAverageDtos=new ArrayList<SysLoadAverageDto>(144);
         data=getData.getOneDayData(ip);
         for(String s:data){
-            averageDto=getSysLoadFromData(ip);
+            averageDto=getSysLoadFromData(s);
             loadAverageDtos.add(averageDto);
         }
         return loadAverageDtos;

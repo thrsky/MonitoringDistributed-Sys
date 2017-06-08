@@ -20,9 +20,9 @@ public class getInfoFromData {
      */
     public static CpuDto getCpuFromData(String data){
         String expr="cpuUsedRate=(.*?),";
-        CpuDto cpuDto=null;
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
+        CpuDto cpuDto=new CpuDto();
         if(matcher.find()){
             cpuDto.setUsage(Double.parseDouble(matcher.group(1)));
             cpuDto.setTime(getDateFromData(data));
@@ -63,7 +63,7 @@ public class getInfoFromData {
     }
 
     public static netInDto getNetInFromData(String data){
-        netInDto netInDto=null;
+        netInDto netInDto=new netInDto();
         String expr="netReceive_kbps=(.*?),";
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
@@ -75,7 +75,7 @@ public class getInfoFromData {
     }
 
     public static netOutDto getNetOutFromData(String data){
-        netOutDto netOutDto=null;
+        netOutDto netOutDto=new netOutDto();
         String expr="netSend_kbps=(.*?),";
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
@@ -87,7 +87,7 @@ public class getInfoFromData {
     }
 
     public static DiskReadDto getDiskReadFromData(String data){
-        DiskReadDto diskReadDto=null;
+        DiskReadDto diskReadDto=new DiskReadDto();
         String expr="diskRead_kbps=(.*?),";
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
@@ -99,7 +99,7 @@ public class getInfoFromData {
     }
 
     public static DiskWriteDto getDiskWriteFromData(String data){
-        DiskWriteDto diskWriteDto=null;
+        DiskWriteDto diskWriteDto=new DiskWriteDto();
         String expr="diskWrite_kbps=(.*?),";
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
@@ -111,7 +111,7 @@ public class getInfoFromData {
     }
 
     public static SysLoadAverageDto getSysLoadFromData(String data){
-        SysLoadAverageDto sysLoadAverageDto=null;
+        SysLoadAverageDto sysLoadAverageDto=new SysLoadAverageDto();
         String expr="SystemLoadAverage=(.*?),";
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);

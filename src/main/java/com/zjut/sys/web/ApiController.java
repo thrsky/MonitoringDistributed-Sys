@@ -40,7 +40,7 @@ public class ApiController {
     }
 
     /**
-     *  系统负载
+     *  系统负载 可用
      * @param ip
      * @param mode
      * @return
@@ -60,7 +60,7 @@ public class ApiController {
     }
 
     /**
-     * CPU相关接口
+     * CPU相关接口 可用
      * @param ip
      * @param mode
      * @return
@@ -81,7 +81,7 @@ public class ApiController {
 
 
     /**
-     * 内存
+     * 内存 - 可用
      * @param ip
      * @param mode
      * @return
@@ -102,7 +102,7 @@ public class ApiController {
     }
 
     /**
-     * net receive
+     * net receive 可用
      * @param ip
      * @param mode
      * @return
@@ -122,7 +122,7 @@ public class ApiController {
     }
 
     /**
-     * net send
+     * net send 可用
      * @param ip
      * @param mode
      * @return
@@ -141,7 +141,7 @@ public class ApiController {
         return res;
     }
 
-
+    //可用
     @GetMapping(value = "{ip}/disk/info/read/{mode}")
     @ResponseBody
     public List<DiskReadDto> getDiskReadData(@PathVariable("ip") String ip,
@@ -156,6 +156,12 @@ public class ApiController {
         return res;
     }
 
+    /**
+     *  可用
+     * @param ip
+     * @param mode
+     * @return
+     */
     @GetMapping(value = "{ip}/disk/info/write/{mode}")
     @ResponseBody
     public List<DiskWriteDto> getDiskWriteData(@PathVariable("ip") String ip,

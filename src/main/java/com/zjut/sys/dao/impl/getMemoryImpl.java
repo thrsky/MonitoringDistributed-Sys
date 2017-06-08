@@ -19,6 +19,7 @@ public class getMemoryImpl implements getMemory {
     private getDataImpl getData;
 
     public List<MemoryDto> get15MinMen(String ip) {
+        getData=new getDataImpl();
         List<String> data=getData.get15Minutes(ip);
         List<MemoryDto> res=new ArrayList<MemoryDto>();
         MemoryDto memoryDto;
@@ -30,6 +31,7 @@ public class getMemoryImpl implements getMemory {
     }
 
     public List<MemoryDto> get1Day(String ip) {
+        getData=new getDataImpl();
         List<String> data=getData.getOneDayData(ip);
         List<MemoryDto> res=new ArrayList<MemoryDto>(144);
         MemoryDto memoryDto;
