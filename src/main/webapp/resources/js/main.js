@@ -132,7 +132,7 @@ var table = {
                         //x y
                         value: [
                             [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                            result[i].usage
+                            table.jsonData(result[i],"r")
                         ]
                     };
                     data.push(tdata);
@@ -148,7 +148,7 @@ var table = {
                             //x y
                             value: [
                                 [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                                result[i].usage
+                                table.jsonData(result[i],"w")
                             ]
                         };
                         data2.push(tdata);
@@ -168,7 +168,7 @@ var table = {
                         //x y
                         value: [
                             [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                            result[i].usage == null ? :
+                            table.jsonData(result[i])
                         ]
                     };
                     data.push(tdata);
@@ -183,7 +183,7 @@ var table = {
         if(type=="memory"){
             return jsonobj.rate;
         }
-        if(type=="cpu"){
+        if(type=="cpu"||type=="sysLoad"){
             return jsonobj.usage;
         }
         if(type=="net"||type=="disk"){
