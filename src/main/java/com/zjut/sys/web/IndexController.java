@@ -26,47 +26,70 @@ public class IndexController {
     @Autowired
     EcsInfoServer ecsInfoServer;
 
-    @RequestMapping(value = "index",method = RequestMethod.GET)
-    public String index(Model model){
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String index(Model model) {
         return "index";
     }
 
-    @RequestMapping(value = "charts/",method = RequestMethod.GET)
-    public String charts(Model model){
+    @RequestMapping(value = "charts/", method = RequestMethod.GET)
+    public String charts(Model model) {
         return "charts";
     }
 
     /**
      * 显示单个服务器的信息
+     *
      * @param ip
      * @param model
      * @return
      */
-    @RequestMapping(value = "{ip}/info",method = RequestMethod.GET)
-    public String serverInfo(@PathVariable("ip")String ip, Model model){
+    @RequestMapping(value = "{ip}/info", method = RequestMethod.GET)
+    public String serverInfo(@PathVariable("ip") String ip, Model model) {
         Ecs ecsBriefDto = ecsInfoServer.getEscInfo(ip);
-        model.addAttribute("server",ecsBriefDto);
+        model.addAttribute("server", ecsBriefDto);
+        model.addAttribute("type","cpu");
+        model.addAttribute("timetype","1d");
+        return "info";
+    }
+
+    /**
+     * 显示单个服务器的信息
+     *
+     * @param ip
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{ip}/info/{type}/{timetype}", method = RequestMethod.GET)
+    public String serverInfoModelType(@PathVariable("ip") String ip,
+                                      @PathVariable("type") String mod,
+                                      @PathVariable("timetype") String timetype,
+                                      Model model) {
+        Ecs ecsBriefDto = ecsInfoServer.getEscInfo(ip);
+        model.addAttribute("server", ecsBriefDto);
+        model.addAttribute("type",mod);
+        model.addAttribute("timetype",timetype);
         return "info";
     }
 
     /**
      * 显示服务器列表
+     *
      * @param model
      * @return
      */
-    @RequestMapping(value = "serverList",method = RequestMethod.GET)
-    public String serverList(Model model){
-        List<Ecs> serverList=ecsInfoServer.getEcsList();
-        model.addAttribute("serverList",serverList);
+    @RequestMapping(value = "serverList", method = RequestMethod.GET)
+    public String serverList(Model model) {
+        List<Ecs> serverList = ecsInfoServer.getEcsList();
+        model.addAttribute("serverList", serverList);
         return "serverList";
     }
 
-    @RequestMapping(value = "messageCenter",method = RequestMethod.GET)
-    public String messageCenter(Model model){
+    @RequestMapping(value = "messageCenter", method = RequestMethod.GET)
+    public String messageCenter(Model model) {
         List<WarnMessage> warnMessageList = messageCenterService.getWarnMessages();
-        model.addAttribute("list",warnMessageList);
-        List<Ecs> serverList=ecsInfoServer.getEcsList();
-        model.addAttribute("serverList",serverList);
+        model.addAttribute("list", warnMessageList);
+        List<Ecs> serverList = ecsInfoServer.getEcsList();
+        model.addAttribute("serverList", serverList);
 
         return "messageCenter";
     }

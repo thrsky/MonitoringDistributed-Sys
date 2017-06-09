@@ -30,17 +30,17 @@ var table = {
     /**
      *自动get获取数据
      */
-    start: function (chart,data,type,timetype) {
-        console.log("start[]timetype="+timetype);
-        if(timetype=='1d'){
+    start: function (chart, data, type, timetype) {
+        console.log("start[]timetype=" + timetype);
+        if (timetype == '1d') {
             console.log("it is 1d");
-            table.getInitData(chart,data,type, timetype);
+            table.getInitData(chart, data, type, timetype);
             chart.hideLoading();
-        }else{
-            table.getInitData(chart,data,type,timetype);
+        } else {
+            table.getInitData(chart, data, type, timetype);
             chart.hideLoading();
             var stopId = setInterval(function () {
-                table.getData(chart,data,type, timetype);
+                table.getData(chart, data, type, timetype);
             }, table.perTime);
             return stopId;
         }
@@ -49,7 +49,7 @@ var table = {
     /**
      * 添加数据到table 中
      */
-    addData: function (chart,data) {
+    addData: function (chart, data) {
         console.log("add data to table");
         chart.setOption({
             series: [{
@@ -64,7 +64,7 @@ var table = {
      * @param timetype
      * @param num
      */
-    getData: function (chart,data,type, timetype) {
+    getData: function (chart, data, type, timetype) {
         console.log("heart beat get data")
         $.get(table.url.heartbeat(type, timetype), {}, function (result) {
             console.log(table.url.heartbeat(type, timetype));
@@ -87,7 +87,7 @@ var table = {
             }
             console.log(data);
             console.log("try to add data");
-            table.addData(chart,data);
+            table.addData(chart, data);
         });
 
     },
@@ -97,7 +97,7 @@ var table = {
      * @param type
      * @param timetype
      */
-    getInitData: function (chart,data,type, timetype) {
+    getInitData: function (chart, data, type, timetype) {
         console.log("get init data");
         $.get(table.url.init(type, timetype), {}, function (result) {
             console.log("init-url:" + table.url.init(type, timetype));
@@ -115,13 +115,13 @@ var table = {
                 data.push(tdata);
             }
             console.log(data);
-            table.addData(chart,data);
+            table.addData(chart, data);
         });
     },
-    showTable: function (title,chart,data,type,timetype,stopId) {
-        table.stop(stopId);
+    showTable: function (title, chart, data, type, timetype, stopId) {
+        // table.stop(stopId);
         //重置data
-        data=[]
+        data = []
         // 指定图表的配置项和数据
         var option = {
             title: {
@@ -160,23 +160,40 @@ var table = {
                 data: data
             }]
         };
-        if(chart==null){
+        if (chart == null) {
             console.log("error: chart=null");
             return;
         }
-
-        chart.hideLoading();
         chart.setOption(option);
-        table.start(chart,data,type,timetype);
+        table.start(chart, data, type, timetype);
     }
 }
 var view = {
-    show: function () {
-        var chart0 = table.getChart('chart0');
+    show: function (type,timetype) {
+        var chart0 = table.getChart('chart');
         var data0 = [];
-        var stopId = -1;
-        table.showTable("CPU运行状态",chart0,data0,'cpu','1d',stopId);
-
+        var stopId0 = -1;
+        var title = '';
+        if(type=="cpu"){
+            title="cpu运行状态";
+        }
+        if(type=="memory"){
+            title="内存运行状态";
+        }
+        if(type=="net"){
+            title="网络读写状态";
+        }
+        if(type=="sysLoad"){
+            title="系统负载状态";
+        }
+        if(type=="disk"){
+            title="磁盘运行状态";
+        }
+        table.showTable(title, chart0, data0, type, timetype, stopId0);
+    },
+    sleep: function sleep(n) { //n表示的毫秒数
+        var start = new Date().getTime();
+        while (true) if (new Date().getTime() - start > n) break;
     }
 }
 var text = {

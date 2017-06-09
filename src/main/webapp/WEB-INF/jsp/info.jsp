@@ -53,13 +53,13 @@
                     <div class="col-lg-5">
                         <table class="table table-condensed">
                             <tr>
-                                <td><a id="showCpu">cpu</a></td>
-                                <td><a id="showMem">内存</a></td>
-                                <td><a id="showDisk">磁盘</a></td>
+                                <td>cpu [<a href="/${server.ip}/info/cpu/1d">一天</a> | <a href="/${server.ip}/info/cpu/2h">2小时</a>]</td>
+                                <td>内存 [<a href="/${server.ip}/info/memory/1d">一天</a>|<a href="/${server.ip}/info/memory/2h">2小时</a>]</td>
+                                <td>磁盘 [<a href="/${server.ip}/info/disk/1d">一天</a>|<a href="/${server.ip}/info/disk/2h">2小时</a>]</td>
                             </tr>
                             <tr>
-                                <td><a id="showNet">网络</a></td>
-                                <td><a id="showSysLoad">平均负载</a></td>
+                                <td>网络 <a href="/${server.ip}/info/net/1d">一天</a>|<a href="/${server.ip}/info/net/2h">2小时</a>]</td>
+                                <td>系统负载 <a href="/${server.ip}/info/sysLoad/1d">一天</a>|<a href="/${server.ip}/info/sysLoad/2h">2小时</a>]</td>
                             </tr>
                         </table>
                     </div>
@@ -71,7 +71,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <c:forEach begin="0" end="4" varStatus="idx">
+    <%--<c:forEach begin="0" end="4" varStatus="idx">--%>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -80,12 +80,12 @@
                         <button class="btn btn-warning" id="start_post">start</button>
                     </div>
                     <div class="panel-body">
-                        <div id="chart${idx.index}" style="width: 1000px;height:400px;"></div>
+                        <div id="chart" style="width: 1000px;height:400px;"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </c:forEach>
+    <%--</c:forEach>--%>
 
     <div class="row">
         <div class="col-log-12">
@@ -120,7 +120,7 @@
 //        table.setTypeAndTimeType('cpu','15minutes');
 //
 //        view.showCpuTable();
-        view.show();
+        view.show("${type}","${timetype}");
     })
 </script>
 
