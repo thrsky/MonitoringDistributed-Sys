@@ -31,6 +31,7 @@ public class ApiController {
     @Autowired
     private EcsInfoServer ecsInfoServer;
 
+
     @GetMapping(value = "/{ip}/info")
     @ResponseBody
     public Ecs getInfo(@PathVariable("ip") String ip, Model model) {

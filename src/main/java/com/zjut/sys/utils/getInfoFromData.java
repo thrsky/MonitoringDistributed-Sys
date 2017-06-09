@@ -58,6 +58,7 @@ public class getInfoFromData {
             memoryDto.setMenToal(Double.parseDouble(matcher.group(1)));
             memoryDto.setMenUsed(Double.parseDouble(matcher.group(2)));
             memoryDto.setRate(memoryDto.getMenUsed()/memoryDto.getMenToal());
+            memoryDto.setDate(getDateFromData(data));
         }
         return memoryDto;
     }
