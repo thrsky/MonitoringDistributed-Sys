@@ -44,13 +44,7 @@ public class IndexController {
      */
     @RequestMapping(value = "{ip}/info",method = RequestMethod.GET)
     public String serverInfo(@PathVariable("ip")String ip, Model model){
-        EcsBriefDto ecsBriefDto = new EcsBriefDto();
-        ecsBriefDto.setCpu("1Ghz");
-        ecsBriefDto.setDisk("500G");
-        ecsBriefDto.setIp("127.0.0.1");
-        ecsBriefDto.setMemory("1G");
-        ecsBriefDto.setName("test");
-        ecsBriefDto.setStatus("running");
+        Ecs ecsBriefDto = ecsInfoServer.getEscInfo(ip);
         model.addAttribute("server",ecsBriefDto);
         return "info";
     }

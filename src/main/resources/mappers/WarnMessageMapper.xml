@@ -16,7 +16,7 @@
     insert into warnMessage (id, title, warnLine, 
       type, status, item, 
       email)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{warnline,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{warnLine,jdbcType=VARCHAR},
       #{type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{item,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR})
   </insert>
@@ -58,7 +58,7 @@
       <if test="title != null">
         title,
       </if>
-      <if test="warnline != null">
+      <if test="warnLine != null">
         warnLine,
       </if>
       <if test="type != null">
@@ -81,8 +81,8 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="warnline != null">
-        #{warnline,jdbcType=VARCHAR},
+      <if test="warnLine != null">
+        #{warnLine,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},

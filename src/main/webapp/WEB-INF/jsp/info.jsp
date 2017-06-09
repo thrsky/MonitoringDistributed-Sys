@@ -5,6 +5,7 @@
 <head>
     <title>控制台</title>
     <%@include file="common/head.jsp" %>
+    <%@include file="common/tag.jsp"%>
 </head>
 
 <body>
@@ -39,13 +40,13 @@
                         <ul class="list-group">
                             <li class="list-group-item">节点名称: ${server.name}</li>
                             <li class="list-group-item">ip地址: ${server.ip}</li>
-                            <li class="list-group-item">操作系统: ${server.operation}</li>
+                            <li class="list-group-item">操作系统: ${server.os}</li>
                         </ul>
                     </div>
 
                     <div class="col-lg-4">
                         <p>
-                            描述: ${server.description}
+                            描述: ${server.desc}
                         </p>
                     </div>
 
@@ -57,9 +58,8 @@
                                 <td><a id="showDisk">磁盘</a></td>
                             </tr>
                             <tr>
-                                <td><a id="">网络流入</a></td>
-                                <td><a id="">网络流出</a></td>
-                                <td><a id="">平均负载</a></td>
+                                <td><a id="showNet">网络</a></td>
+                                <td><a id="showSysLoad">平均负载</a></td>
                             </tr>
                         </table>
                     </div>
@@ -71,19 +71,22 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <button class="btn btn-warning" id="stop_post">stop</button>
-                    <button class="btn btn-warning" id="start_post">start</button>
-                </div>
-                <div class="panel-body">
-                    <div id="chart" style="width: 1000px;height:400px;"></div>
+    <c:forEach begin="0" end="4" varStatus="idx">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <button class="btn btn-warning" id="stop_post">stop</button>
+                        <button class="btn btn-warning" id="start_post">start</button>
+                    </div>
+                    <div class="panel-body">
+                        <div id="chart${idx}" style="width: 1000px;height:400px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </c:forEach>
+
 
     <div class="row">
         <div class="col-log-12">
@@ -112,10 +115,12 @@
 <script type="text/javascript">
     $(function () {
 //        text.setMaxUsage("hello");
-        <%--table.setIp('${server.ip}');--%>
-        table.setIp('115.159.206.169');
-        table.setTypeAndTimeType('cpu','OneDay');
-        view.showCpuTable(10 * 1000);
+        table.setIp('${server.ip}');
+//        table.setIp('115.159.206.169');
+//        table.setTypeAndTimeType('cpu','OneDay');
+        table.setTypeAndTimeType('cpu','15minutes');
+
+        view.showCpuTable();
         view.show();
     })
 </script>

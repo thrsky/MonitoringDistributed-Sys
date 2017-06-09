@@ -8,7 +8,7 @@ public class WarnMessage {
 
     private String title;
 
-    private Double warnline;
+    private Double warnLine;
 
     private Integer type;
 

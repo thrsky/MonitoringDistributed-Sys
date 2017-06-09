@@ -17,13 +17,13 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ip, name, user_id, desc, cpu, disk, memory, status, port, passwd, os
+    ip, `name`, user_id, `desc`, cpu, disk, memory, status, port, passwd, os
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ecs
-    where ip = #{ip,jdbcType=VARCHAR}
+    where ip = #{ip}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ecs

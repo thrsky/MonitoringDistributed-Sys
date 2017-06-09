@@ -10,7 +10,7 @@
 <div class="row">
 
     <!-- 服务器列表 -->
-    <c:forEach items="${list}" var="server">
+    <c:forEach items="${serverList}" var="server">
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading" style="height: 50px">节点名称：<span id="#name">${server.name}</span></div>

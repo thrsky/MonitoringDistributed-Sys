@@ -176,7 +176,6 @@ public class ApiController {
         return res;
     }
 
-
     @GetMapping(value = "warnMessage/{id}")
     @ResponseBody
     public WarnMessage getWarnMessageById(@PathVariable("id") long id) {

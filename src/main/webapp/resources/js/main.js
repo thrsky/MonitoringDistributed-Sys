@@ -6,7 +6,7 @@ var table = {
     data: [],
     stopId: null,
     //默认为50个数据
-    dataLimitCount: 200,
+    dataLimitCount: 400,
     type: 'cpu',
     timetype: '15minutes',
     perTime: 30 * 1000,
@@ -42,15 +42,19 @@ var table = {
      *自动get获取数据
      */
     start: function (time) {
-        if (time == null) {
-            console.log('time is null');
-            time = table.perTime;
-            console.log("set time to " + table.perTime);
-        }
-        table.getInitData(table.type, table.timetype);
-        table.stopId = setInterval(function () {
+        if(table.timetype=='OneDay'){
             table.getData(table.type, table.timetype);
-        }, time);
+        }else{
+            if (time == null) {
+                console.log('time is null');
+                time = table.perTime;
+                console.log("set time to " + table.perTime);
+            }
+            table.getInitData(table.type, table.timetype);
+            table.stopId = setInterval(function () {
+                table.getData(table.type, table.timetype);
+            }, time);
+        }
     },
 
     /**
@@ -93,10 +97,11 @@ var table = {
                 }
                 table.data.push(tdata);
             }
+            console.log(table.data);
+            console.log("try to add data");
+            table.addData(table.data);
         });
-        console.log(table.data);
-        console.log("try to add data");
-        table.addData(table.data);
+
     },
 
     /**
@@ -122,9 +127,9 @@ var table = {
                 };
                 table.data.push(tdata);
             }
+            console.log(table.data);
+            table.addData(table.data);
         });
-        console.log(table.data);
-        table.addData(table.data);
     },
     showTable: function (title) {
         table.stop();
@@ -161,8 +166,8 @@ var table = {
             },
             series: [{
                 name: '模拟数据',
-                type: 'bar',
-                showSymbol: true,
+                type: 'line',
+                showSymbol: false,
                 hoverAnimation: true,
                 connectNulls: true,
                 data: table.data
@@ -178,6 +183,7 @@ var table = {
 var view = {
     showCpuTable: function () {
         var title = "CPU运行状态";
+        table.setTypeAndTimeType('cpu', 'OneDay');
         table.showTable(title);
     },
     showMemTable: function () {
@@ -190,6 +196,16 @@ var view = {
         table.setTypeAndTimeType('disk', 'OneDay');
         table.showTable(title);
     },
+    showSysTable:function () {
+        var title="系统负载情况";
+        table.setTypeAndTimeType('sysLoad','OneDay');
+        table.showTable(title);
+    },
+    showNetTable:function () {
+        var title="网络流情况";
+        table.setTypeAndTimeType('net','OneDay');
+        table.showTable(title);
+    },
     show: function () {
         $('#showCpu').click(function () {
             console.log(table.stopId);
@@ -200,6 +216,12 @@ var view = {
         });
         $('#showDisk').click(function () {
             view.showDiskTable();
+        });
+        $('#showNet').click(function () {
+            view.showNetTable();
+        });
+        $('#showSysLoad').click(function () {
+            view.showSysTable();
         });
         $('#stop_post').click(function () {
             table.stop();
