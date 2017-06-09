@@ -44,6 +44,7 @@
                         <th>#</th>
                         <th style="width: 600px">名称</th>
                         <th>状态</th>
+                        <th>临界值</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -52,12 +53,32 @@
                         <tr>
                             <th scope="row">${item.id}</th>
                             <td>${item.title}</td>
-                            <td>${item.status}</td>
+                            <%--<td>${item.status}</td>--%>
+                            <td><c:choose>
+                                <c:when test="${item.status==1}">监控中</c:when>
+                                <c:otherwise>暂停使用</c:otherwise>
+                            </c:choose></td>
+                            <td>${item.warnLine}</td>
+                            <%--<td><c:if test="${item.status==1}">监控中</c:if>--%>
+                            <%--<td><c:if test="${item.status==1}">暂停使用</c:if>--%>
                             <td><a type="button" class="warnMessageBtnUpdate" id="${item.id}" data-toggle="modal"
                                    data-target="#myModal">
                                 编辑
                             </a>|<a type="button" class="warnMessageBtnDelete" id="${item.id}" data-toggle="modal"
-                                    data-target="#delete">删除</a></td>
+                                    data-target="#delete">删除</a>|
+                                <c:choose>
+                                    <c:when test="${item.status==1}">
+                                        <a type="button" class="warnMessageBtnStop" id="${item.id}" data-toggle="modal"
+                                           data-target="#stop">暂停</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a type="button" class="warnMessageBtnStart" id="${item.id}" data-toggle="modal"
+                                           data-target="#start">启用</a>
+                                    </c:otherwise>
+                                </c:choose>
+                                <%--<a type="button" class="warnMessageBtnStop" id="${item.id}" data-toggle="modal"--%>
+                                    <%--data-target="#stop">暂停</a>--%>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -235,6 +256,44 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="stop" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabe2">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    确认暂停？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a type="button" id="btn-confirm-stop" class="btn btn-primary">确认暂停</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="myModalLabe3">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabe3">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    确认启用？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a type="button" id="btn-confirm-start" class="btn btn-primary">确认启用</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     $(".warnMessageBtnUpdate").click(function () {
@@ -255,6 +314,16 @@
         console.log($(this).attr('id'));
         var id = $(this).attr('id');
         $('#btn-confirm-delete').attr('href', '/api/warnMessage/' + id + '/delete');
+    });
+    $(".warnMessageBtnStop").click(function () {
+        console.log($(this).attr('id'));
+        var id = $(this).attr('id');
+        $('#btn-confirm-stop').attr('href', '/api/warnMessage/' + id + '/stop');
+    });
+    $(".warnMessageBtnStart").click(function () {
+        console.log($(this).attr('id'));
+        var id = $(this).attr('id');
+        $('#btn-confirm-start').attr('href', '/api/warnMessage/' + id + '/start');
     });
 </script>
 

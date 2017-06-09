@@ -59,6 +59,12 @@ public class MessageCenterServiceImpl implements MessageCenterService {
         return warnMessageMapper.delete(id);
     }
 
+    public boolean stopWarmMessage(long id) {
+        return warnMessageMapper.stopMessage(id);
+    }
+    public boolean startwarnMessage(long id){
+        return warnMessageMapper.startMessage(id);
+    }
     public long create(WarnMessage warnMessage) {
         return warnMessageMapper.create(warnMessage);
     }
@@ -74,7 +80,7 @@ public class MessageCenterServiceImpl implements MessageCenterService {
         for(WarnMessage s:messages){
 //            cpuDtos=getCpuData.get15MinCpu(s.getIp());
             CpuDto dto=getCpuData.get1Cpu(s.getIp());
-            if(dto.getUsage()>=s.getWarnLine())
+            if(dto.getUsage()>=s.getWarnLine()&&s.getStatus()==1)
                 res.add(s);
         }
         return res;

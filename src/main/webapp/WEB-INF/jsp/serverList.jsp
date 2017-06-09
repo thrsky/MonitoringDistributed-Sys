@@ -23,10 +23,52 @@
                 </a>
             </li>
             <li class="active">Icons</li>
+            <li class="active"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new">
+                添加服务器？
+            </button></li>
         </ol>
     </div>
     <!--/.row-->
+    <div class="modal fade" id="new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" id="new_modal_form" method="post" action="/api/warnMessage/create">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">添加方式</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="modal_id"/>
 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">要求</label>
+                            <label class="col-sm-1"></label>
+                            <label>服务器已安装Java</label>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">步骤1</label>
+                            <label class="col-sm-1"></label>
+                            <label>下载 http://www.thrsky.top/assets/server/init.sh</label>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">步骤2</label>
+                            <label class="col-sm-1"></label>
+                            <label>执行init.sh文件</label>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">步骤3</label>
+                            <label class="col-sm-1"></label>
+                            <label>使用本web项目</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <%@include file="common/serverList.jsp"%>
 
 <!--/.row-->
