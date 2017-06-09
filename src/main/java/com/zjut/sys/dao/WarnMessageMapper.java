@@ -4,15 +4,16 @@ import com.zjut.sys.pojo.WarnMessage;
 
 import java.util.List;
 
-/**
- * Created by xjy on 2017/6/3.
- */
 public interface WarnMessageMapper {
-    long create(WarnMessage warnMessage);
+    int insert(WarnMessage record);
 
-    WarnMessage findById(long id);
+    int insertSelective(WarnMessage record);
+
+    long create(WarnMessage message);
 
     List<WarnMessage> getAll();
+
+    WarnMessage findById(long id);
 
     boolean update(WarnMessage warnMessage);
 

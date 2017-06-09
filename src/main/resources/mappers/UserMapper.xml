@@ -3,33 +3,28 @@
 <mapper namespace="com.zjut.sys.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.zjut.sys.pojo.User">
     <constructor>
-      <idArg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_ecs_nums" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="user_email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_phone" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, user_name, user_password, user_ecs_nums, user_email, user_phone
+    user_id, user_name, user_password
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zjut.sys.pojo.User">
-    insert into user (user_id, user_name, user_password, 
-      user_ecs_nums, user_email, user_phone
+    insert into user (user_id, user_name, user_password
       )
-    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
-      #{userEcsNums,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{userPhone,jdbcType=BIGINT}
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zjut.sys.pojo.User">
@@ -44,34 +39,16 @@
       <if test="userPassword != null">
         user_password,
       </if>
-      <if test="userEcsNums != null">
-        user_ecs_nums,
-      </if>
-      <if test="userEmail != null">
-        user_email,
-      </if>
-      <if test="userPhone != null">
-        user_phone,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
       <if test="userPassword != null">
         #{userPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="userEcsNums != null">
-        #{userEcsNums,jdbcType=INTEGER},
-      </if>
-      <if test="userEmail != null">
-        #{userEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null">
-        #{userPhone,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -84,25 +61,13 @@
       <if test="userPassword != null">
         user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="userEcsNums != null">
-        user_ecs_nums = #{userEcsNums,jdbcType=INTEGER},
-      </if>
-      <if test="userEmail != null">
-        user_email = #{userEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=BIGINT},
-      </if>
     </set>
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zjut.sys.pojo.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR},
-      user_ecs_nums = #{userEcsNums,jdbcType=INTEGER},
-      user_email = #{userEmail,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=BIGINT}
-    where user_id = #{userId,jdbcType=VARCHAR}
+      user_password = #{userPassword,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
 </mapper>

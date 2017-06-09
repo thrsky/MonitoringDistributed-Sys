@@ -21,7 +21,7 @@ public class WarnMessageMapperTest {
     public void create() {
         WarnMessage warnMessage = new WarnMessage();
         warnMessage.setTitle("test");
-        warnMessage.setWarnLine(0.97);
+        warnMessage.setWarnline(0.97);
         warnMessage.setType(WarnMessage.TYPE.larger.value());
 
         warnMessageMapper.create(warnMessage);
@@ -36,10 +36,10 @@ public class WarnMessageMapperTest {
     @Test
     public void  update(){
         WarnMessage warnMessage = warnMessageMapper.findById(1L);
-        warnMessage.setWarnLine(0.02);
+        warnMessage.setWarnline(0.02);
         warnMessage.setTitle("hello");
         Assert.assertTrue(warnMessageMapper.update(warnMessage));
-        Assert.assertEquals(warnMessageMapper.findById(1L).getWarnLine(),warnMessage.getWarnLine(),1);
+        Assert.assertEquals(warnMessageMapper.findById(1L).getWarnline(),warnMessage.getWarnline(),1);
     }
 
     @Test
