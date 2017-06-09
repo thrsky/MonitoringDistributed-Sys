@@ -30,17 +30,17 @@ var table = {
     /**
      *自动get获取数据
      */
-    start: function (chart, data, type, timetype,data2) {
+    start: function (chart, data, type, timetype, data2) {
         console.log("start[]timetype=" + timetype);
         if (timetype == '1d') {
             console.log("it is 1d");
-            table.getInitData(chart, data, type, timetype,data2);
+            table.getInitData(chart, data, type, timetype, data2);
             chart.hideLoading();
         } else {
-            table.getInitData(chart, data, type, timetype,data2);
+            table.getInitData(chart, data, type, timetype, data2);
             chart.hideLoading();
             var stopId = setInterval(function () {
-                table.getData(chart, data, type, timetype,data2);
+                table.getData(chart, data, type, timetype, data2);
             }, table.perTime);
             return stopId;
         }
@@ -86,7 +86,7 @@ var table = {
      * @param timetype
      * @param num
      */
-    getData: function (chart, data, type, timetype,data2) {
+    getData: function (chart, data, type, timetype, data2) {
         console.log("heart beat get data")
         $.get(table.url.heartbeat(type, timetype), {}, function (result) {
             console.log(table.url.heartbeat(type, timetype));
@@ -119,11 +119,11 @@ var table = {
      * @param type
      * @param timetype
      */
-    getInitData: function (chart, data, type, timetype,data2) {
+    getInitData: function (chart, data, type, timetype, data2) {
         console.log("get init data");
         if (type == "disk" || type == "net") {
-            $.get("/api/"+table.ip+"/"+type+"/info/read/"+timetype, {}, function (result) {
-                console.log("/api/"+table.ip+"/"+type+"/info/read/");
+            $.get("/api/" + table.ip + "/" + type + "/info/read/" + timetype, {}, function (result) {
+                console.log("/api/" + table.ip + "/" + type + "/info/read/");
                 for (var i = 0, l = result.length; i < l; i++) {
                     var time = new Date(result[i].time);
                     var tdata = {
@@ -138,8 +138,8 @@ var table = {
                     data.push(tdata);
                 }
                 console.log(data);
-                $.get("/api/"+table.ip+"/"+type+"/info/write/"+timetype, {}, function (result) {
-                    console.log("/api/"+table.ip+"/"+type+"/info/write/");
+                $.get("/api/" + table.ip + "/" + type + "/info/write/" + timetype, {}, function (result) {
+                    console.log("/api/" + table.ip + "/" + type + "/info/write/");
                     for (var i = 0, l = result.length; i < l; i++) {
                         var time = new Date(result[i].time);
                         var tdata = {
@@ -154,7 +154,7 @@ var table = {
                         data2.push(tdata);
                     }
                     console.log(data2);
-                    table.addDoubleData(chart,data,data2);
+                    table.addDoubleData(chart, data, data2);
                 });
             });
         } else {
@@ -168,7 +168,7 @@ var table = {
                         //x y
                         value: [
                             [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                            result[i].usage
+                            result[i].usage == null ? :
                         ]
                     };
                     data.push(tdata);
@@ -176,6 +176,21 @@ var table = {
                 console.log(data);
                 table.addData(chart, data);
             });
+        }
+
+    },
+    jsonData: function (jsonobj, type,rw) {
+        if(type=="memory"){
+            return jsonobj.rate;
+        }
+        if(type=="cpu"){
+            return jsonobj.usage;
+        }
+        if(type=="net"||type=="disk"){
+            if(rw="r")
+                return jsonobj.read;
+            else
+                return jsonobj.write;
         }
 
     },
@@ -188,11 +203,11 @@ var table = {
             console.log("error: chart=null");
             return;
         }
-        var option = table.getOption(title,type, data);
+        var option = table.getOption(title, type, data);
         chart.setOption(option);
-        table.start(chart, data, type, timetype,data2);
+        table.start(chart, data, type, timetype, data2);
     },
-    getOption: function (title,type, data) {
+    getOption: function (title, type, data) {
         var option = null;
         if (type == "net" || type == "disk") {
             option = {
@@ -306,7 +321,7 @@ var view = {
             title = "磁盘运行状态";
         }
         if (type == "disk" || type == "net")
-            table.showTable(title, chart0, data0, type, timetype, stopId0,data1);
+            table.showTable(title, chart0, data0, type, timetype, stopId0, data1);
         else
             table.showTable(title, chart0, data0, type, timetype, stopId0);
     },
