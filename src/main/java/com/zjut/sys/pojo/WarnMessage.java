@@ -17,6 +17,7 @@ public class WarnMessage {
     boolean status;
     String item;
     String email;
+    String ip;
 
     public static enum TYPE {
         larger(1),

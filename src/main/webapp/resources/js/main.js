@@ -13,7 +13,7 @@ var table = {
     getChart: function (divId) {
         table.chart = echarts.init(document.getElementById(divId));
         table.chart.showLoading();
-        return table.chart
+        return table.chart;
     },
 
     setIp: function (ip) {
@@ -45,7 +45,9 @@ var table = {
         if (time == null) {
             console.log('time is null');
             time = table.perTime;
+            console.log("set time to " + table.perTime);
         }
+        table.getInitData(table.type, table.timetype);
         table.stopId = setInterval(function () {
             table.getData(table.type, table.timetype);
         }, time);
@@ -70,6 +72,7 @@ var table = {
      * @param num
      */
     getData: function (type, timetype) {
+        console.log("heart beat get data")
         $.get(table.url.heartbeat(type, timetype), {}, function (result) {
             console.log(table.url.heartbeat(type, timetype));
             for (var i = 0, l = result.length; i < l; i++) {
@@ -89,10 +92,10 @@ var table = {
                     table.data.shift();
                 }
                 table.data.push(tdata);
-                console.log(table.data);
             }
         });
-        console.log("try to add data log");
+        console.log(table.data);
+        console.log("try to add data");
         table.addData(table.data);
     },
 
@@ -102,7 +105,9 @@ var table = {
      * @param timetype
      */
     getInitData: function (type, timetype) {
+        console.log("get init data");
         $.get(table.url.init(type, timetype), {}, function (result) {
+            console.log("init-url:" + table.url.init(type, timetype));
             for (var i = 0, l = result.length; i < l; i++) {
                 // table.data.shift();
                 var time = new Date(result[i].time);
@@ -116,27 +121,11 @@ var table = {
                     ]
                 };
                 table.data.push(tdata);
-                console.log(table.data);
             }
         });
+        console.log(table.data);
         table.addData(table.data);
     },
-    // //模拟数据
-    // randomData: function () {
-    //     var oneDay = 24 * 3600 * 1000;
-    //     table.now = new Date(+table.now + oneDay);
-    //     table.fake_value = table.fake_value + Math.random() * 21 - 10;
-    //     return {
-    //         //tag
-    //         name: table.now.toString(),
-    //         //x y
-    //         value: [
-    //             [table.now.getFullYear(), table.now.getMonth() + 1, table.now.getDate()].join('/') + " " + table.now.getHours() + ":" + table.now.getMinutes() + ":" + table.now.getSeconds(),
-    //             // Math.round(table.fake_value)
-    //             0.96
-    //         ]
-    //     }
-    // },
     showTable: function (title) {
         table.stop();
         //重置data
@@ -193,10 +182,12 @@ var view = {
     },
     showMemTable: function () {
         var title = "内存运行状态";
+        table.setTypeAndTimeType('memory', 'OneDay');
         table.showTable(title);
     },
     showDiskTable: function () {
         var title = "磁盘运行状态";
+        table.setTypeAndTimeType('disk', 'OneDay');
         table.showTable(title);
     },
     show: function () {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,11 +69,13 @@ public class ApiController {
                                    @PathVariable("mode") String mode){
         List<CpuDto> res = null;
         getCpuData getCpuData=new getCpuDataImpl();
+        log.info("cpu mvc s={}",new Date());
         if(mode.equals("15minutes")){
             res=getCpuData.get15MinCpu(ip);
         }else if(mode.equals("OneDay")){
             res=getCpuData.get1DaysCpu(ip);
         }
+        log.info("cpu mvc e={}",new Date());
         return res;
     }
 

@@ -3,16 +3,19 @@ package com.zjut.sys.dao.impl;
 import com.zjut.sys.dao.getData;
 import com.zjut.sys.enums.redisValue;
 import com.zjut.sys.utils.redisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by thRShy on 2017/6/6.
  */
+@Slf4j
 public class getDataImpl implements getData {
 
     private Logger logger= LoggerFactory.getLogger(this.getClass());
@@ -33,22 +36,17 @@ public class getDataImpl implements getData {
      * @return
      */
     public List<String> getOneDayData(String ip) {
-        List<String> res= new ArrayList<String>() ;
         try{
             jedis= redisUtil.getJedis();
         }catch (Exception e){
             logger.error(redisValue.REDIS_ERROR.getData());
         }
-        String data;
-        for(int i=0;i<24*60;i=i+10){
-            data=jedis.lindex(ip,i);
-            if(data!=null)
-                res.add(data);
-            else{
-//                System.out.println("index is: "+i+" not found");
-            }
-        }
-        return res;
+        List<String> data = new ArrayList<String>(1440);
+
+        log.info("redis s={}",new Date());
+        data=jedis.lrange(ip,0,60*24);
+        log.info("redis e={}",new Date());
+        return data;
     }
 
     public List<String> getSevenDayData(String ip) {
