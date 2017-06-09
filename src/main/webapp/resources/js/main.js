@@ -59,6 +59,8 @@ var table = {
     },
     addDoubleData: function (chart, data1, data2) {
         console.log("add double data");
+        console.log(data1[0]);
+        console.log(data2[0]);
         chart.setOption({
             series: [
                 {
@@ -128,11 +130,11 @@ var table = {
                     var time = new Date(result[i].time);
                     var tdata = {
                         //tag
-                        name: time.toString(),
+                        name: "读入 "+[time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
                         //x y
                         value: [
                             [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                            table.jsonData(result[i],"r")
+                            table.jsonData(result[i], type, "w")
                         ]
                     };
                     data.push(tdata);
@@ -144,11 +146,11 @@ var table = {
                         var time = new Date(result[i].time);
                         var tdata = {
                             //tag
-                            name: time.toString(),
+                            name: "写出 "+[time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
                             //x y
                             value: [
                                 [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                                table.jsonData(result[i],"w")
+                                table.jsonData(result[i], type, "r")
                             ]
                         };
                         data2.push(tdata);
@@ -168,7 +170,7 @@ var table = {
                         //x y
                         value: [
                             [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds(),
-                            table.jsonData(result[i])
+                            table.jsonData(result[i], type)
                         ]
                     };
                     data.push(tdata);
@@ -179,18 +181,18 @@ var table = {
         }
 
     },
-    jsonData: function (jsonobj, type,rw) {
-        if(type=="memory"){
+    jsonData: function (jsonobj, type, rw) {
+        if (type == "memory") {
             return jsonobj.rate;
         }
-        if(type=="cpu"||type=="sysLoad"){
+        if (type == "cpu" || type == "sysLoad") {
             return jsonobj.usage;
         }
-        if(type=="net"||type=="disk"){
-            if(rw="r")
-                return jsonobj.read;
-            else
+        if (type == "net" || type == "disk") {
+            if ("undefined" == typeof(jsonobj['read'])) {
                 return jsonobj.write;
+            }
+            return jsonobj.read;
         }
 
     },
@@ -209,7 +211,7 @@ var table = {
     },
     getOption: function (title, type, data) {
         var option = null;
-        if (type == "net" || type == "disk") {
+        if (type != "net" && type != "disk") {
             option = {
                 title: {
                     text: title
@@ -218,8 +220,9 @@ var table = {
                     trigger: 'axis',
                     formatter: function (params) {
                         params = params[0];
-                        var date = new Date(params.value[0]);
-                        return date.getSeconds() + '/' + (date.getMinutes() + 1) + '/' + date.getHours() + ' : ' + params.value[1];
+                        var time = new Date(params.value[0]);
+                        // return [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+                        return params.value;
                     },
                     axisPointer: {
                         animation: false
@@ -254,13 +257,19 @@ var table = {
                 },
                 tooltip: {//显示提示框
                     trigger: 'axis',
-                    formatter: function (params) {
-                        params = params[0];
-                        var date = new Date(params.value[0]);
-                        return date.getSeconds() + '/' + (date.getMinutes() + 1) + '/' + date.getHours() + ' : ' + params.value[1];
-                    },
+                    // formatter: function (params) {
+                    //
+                    //     return params[0].value+"\n"+params[1].value;
+                    // },
                     axisPointer: {
-                        animation: false
+                        type:'cross',
+                        animation: true,
+                        label:{
+                            formatter:function (params) {
+                                var time = new Date(params.value);
+                                return [time.getFullYear(), time.getMonth() + 1, time.getDate()].join("/") + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+                            }
+                        }
                     }
                 },
                 xAxis: {
@@ -283,7 +292,7 @@ var table = {
                         showSymbol: false,
                         hoverAnimation: true,
                         connectNulls: true,
-                        data: data
+                        data: data,
                     }, {
                         name: '读出',
                         type: 'line',
