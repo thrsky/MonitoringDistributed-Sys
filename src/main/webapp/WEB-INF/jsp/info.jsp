@@ -58,8 +58,8 @@
                                 <td>磁盘 [<a href="/${server.ip}/info/disk/1d">一天</a>|<a href="/${server.ip}/info/disk/2h">2小时</a>]</td>
                             </tr>
                             <tr>
-                                <td>网络 <a href="/${server.ip}/info/net/1d">一天</a>|<a href="/${server.ip}/info/net/2h">2小时</a>]</td>
-                                <td>系统负载 <a href="/${server.ip}/info/sysLoad/1d">一天</a>|<a href="/${server.ip}/info/sysLoad/2h">2小时</a>]</td>
+                                <td>网络 [<a href="/${server.ip}/info/net/1d">一天</a>|<a href="/${server.ip}/info/net/2h">2小时</a>]</td>
+                                <td>系统负载 [<a href="/${server.ip}/info/sysLoad/1d">一天</a>|<a href="/${server.ip}/info/sysLoad/2h">2小时</a>]</td>
                             </tr>
                         </table>
                     </div>

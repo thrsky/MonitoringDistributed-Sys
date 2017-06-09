@@ -114,7 +114,7 @@ public class ApiController {
      * @param mode
      * @return
      */
-    @GetMapping(value = "{ip}/net/info/receive/{mode}")
+    @GetMapping(value = "{ip}/net/info/read/{mode}")
     @ResponseBody
     public List<netInDto> getNetInData(@PathVariable("ip")String ip,
                                        @PathVariable("mode")String mode){
@@ -136,7 +136,7 @@ public class ApiController {
      * @param mode
      * @return
      */
-    @GetMapping(value = "{ip}/net/info/send/{mode}")
+    @GetMapping(value = "{ip}/net/info/write/{mode}")
     @ResponseBody
     public List<netOutDto> getNetOutData(@PathVariable("ip") String ip,
                                          @PathVariable("mode") String mode){
