@@ -26,7 +26,7 @@ public class getDataImpl implements getData {
         }catch (Exception e){
             logger.error(redisValue.REDIS_ERROR.getData());
         }
-        List<String> res= jedis.lrange(ip,0,14);
+        List<String> res= jedis.lrange(ip,0,255);
         return res;
     }
 

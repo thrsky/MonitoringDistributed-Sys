@@ -10,6 +10,8 @@ import com.zjut.sys.service.EcsInfoServer;
 import com.zjut.sys.service.MessageCenterService;
 import com.zjut.sys.util.Email;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class MessageCenterServiceImpl implements MessageCenterService {
     EcsInfoServer ecsInfoServer;
     @Autowired
     getCpuData getCpuData;
+
+    Logger logger= LoggerFactory.getLogger(this.getClass());
 
 
     public boolean sendEmail(String email, String msg) {
@@ -78,16 +82,17 @@ public class MessageCenterServiceImpl implements MessageCenterService {
 
     public void sendEmail() {
         try {
-            MessageCenterService messageCenterService = new MessageCenterServiceImpl();
-            List<WarnMessage> warnMessageList = messageCenterService.shouldSendEmail();
+            List<WarnMessage> warnMessageList = this.shouldSendEmail();
             for (WarnMessage warnMessage : warnMessageList) {
                 String rece = warnMessage.getEmail();
-                String title = warnMessage.getTitle();
-                String content = "你的服务器"+ warnMessage.getItem() + "用量大于" + warnMessage.getWarnLine();
+                String title = "你之前设定的报警信息 ： "+warnMessage.getTitle();
+                String content = "你的服务器"+ warnMessage.getItem() + "用量大于" + warnMessage.getWarnLine()+". 请及时查看你的服务器";
+                logger.info("我要发邮件了");
                 Email.sendMail("15957180610@163.com", "15957180610@163.com", "xujunyu520",
                         rece,
                         title,
                         content);
+                System.out.println("发送了一份邮件");
             }
         } catch (Exception e) {
             log.error("send mail fail , cause={}", e.getMessage());

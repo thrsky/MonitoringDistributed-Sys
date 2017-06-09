@@ -37,4 +37,12 @@ public class getSysLoadAverageImpl  implements getSysLoadAverage {
         }
         return loadAverageDtos;
     }
+
+    public SysLoadAverageDto getSysLoad(String ip) {
+        getData=new getDataImpl();
+        SysLoadAverageDto averageDto;
+        String da=getData.get1Data(ip);
+        averageDto=getSysLoadFromData(da);
+        return averageDto;
+    }
 }

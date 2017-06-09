@@ -45,6 +45,14 @@ public class getDiskImpl implements getDisk {
         return diskReadDtos;
     }
 
+    public DiskReadDto getDiskRead(String ip) {
+        getData=new getDataImpl();
+        DiskReadDto readDto=null;
+        String da=getData.get1Data(ip);
+        readDto=getDiskReadFromData(da);
+        return readDto;
+    }
+
     public List<DiskWriteDto> getOneDayDiskWrite(String ip) {
         getData=new getDataImpl();
         diskWriteDtos=new ArrayList<DiskWriteDto>(144);
@@ -67,5 +75,13 @@ public class getDiskImpl implements getDisk {
             diskReadDtos.add(readDto);
         }
         return diskReadDtos;
+    }
+
+    public DiskWriteDto getDiskWrite(String ip) {
+        getData=new getDataImpl();
+        DiskWriteDto writeDto=null;
+        String da=getData.get1Data(ip);
+        writeDto=getDiskWriteFromData(da);
+        return writeDto;
     }
 }

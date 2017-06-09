@@ -16,6 +16,7 @@ import java.util.List;
 @ContextConfiguration({"classpath:spring/*.xml"})
 public class MessageCenterServiceImplTest {
 
+
     @Autowired
     private MessageCenterServiceImpl messageCenterService;
 
@@ -35,6 +36,13 @@ public class MessageCenterServiceImplTest {
         System.out.println(res.size());
         for(WarnMessage message:res)
             System.out.println(message);
+    }
+
+    @Test
+    public void sendEmail() throws Exception {
+        List<WarnMessage> res=messageCenterService.shouldSendEmail();
+        if(res!=null)
+            messageCenterService.sendEmail();
     }
 
 }

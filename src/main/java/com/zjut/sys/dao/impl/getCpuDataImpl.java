@@ -45,6 +45,7 @@ public class getCpuDataImpl implements getCpuData {
     }
 
     public CpuDto get1Cpu(String ip) {
+        getData=new getDataImpl();
         String data=getData.get1Data(ip);
         CpuDto cpuDto=null;
         cpuDto=getInfoFromData.getCpuFromData(data);
