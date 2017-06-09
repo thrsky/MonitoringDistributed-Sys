@@ -55,10 +55,10 @@ public class getInfoFromData {
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
-            memoryDto.setMenToal(Double.parseDouble(matcher.group(1)));
-            memoryDto.setMenUsed(Double.parseDouble(matcher.group(2)));
-            memoryDto.setRate(memoryDto.getMenUsed()/memoryDto.getMenToal());
-            memoryDto.setDate(getDateFromData(data));
+            memoryDto.setTotal(Double.parseDouble(matcher.group(1)));
+            memoryDto.setUsed(Double.parseDouble(matcher.group(2)));
+            memoryDto.setRate(memoryDto.getUsed()/memoryDto.getTotal());
+            memoryDto.setTime(getDateFromData(data));
         }
         return memoryDto;
     }
@@ -69,8 +69,8 @@ public class getInfoFromData {
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
-            netInDto.setNetIn(Double.parseDouble(matcher.group(1)));
-            netInDto.setDate(getDateFromData(data));
+            netInDto.setRead(Double.parseDouble(matcher.group(1)));
+            netInDto.setTime(getDateFromData(data));
         }
         return netInDto;
     }
@@ -81,8 +81,8 @@ public class getInfoFromData {
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
-            netOutDto.setNetOut(Double.parseDouble(matcher.group(1)));
-            netOutDto.setDate(getDateFromData(data));
+            netOutDto.setWrite(Double.parseDouble(matcher.group(1)));
+            netOutDto.setTime(getDateFromData(data));
         }
         return netOutDto;
     }
@@ -94,7 +94,7 @@ public class getInfoFromData {
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
             diskReadDto.setRead(Double.parseDouble(matcher.group(1)));
-            diskReadDto.setDate(getDateFromData(data));
+            diskReadDto.setTime(getDateFromData(data));
         }
         return diskReadDto;
     }
@@ -106,7 +106,7 @@ public class getInfoFromData {
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
             diskWriteDto.setWrite(Double.parseDouble(matcher.group(1)));
-            diskWriteDto.setDate(getDateFromData(data));
+            diskWriteDto.setTime(getDateFromData(data));
         }
         return diskWriteDto;
     }
