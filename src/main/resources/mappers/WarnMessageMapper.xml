@@ -53,8 +53,14 @@
   </delete>
 
   <update id="stopMessage">
+  UPDATE warnMessage
+  set status=0
+  WHERE id=#{id}
+</update>
+
+  <update id="startMessage">
     UPDATE warnMessage
-    set status=0
+    set status=1
     WHERE id=#{id}
   </update>
 

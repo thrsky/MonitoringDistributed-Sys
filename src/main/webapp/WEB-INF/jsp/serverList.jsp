@@ -43,22 +43,26 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">要求</label>
-                            <span>服务器已安装Java</span>
+                            <label class="col-sm-1"></label>
+                            <label>服务器已安装Java</label>
                         </div>
                         <hr>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">步骤1</label>
-                            <span>下载 http://www.thrsky.top/assets/server/init.sh</span>
+                            <label class="col-sm-1"></label>
+                            <label>下载 http://www.thrsky.top/assets/server/init.sh</label>
                         </div>
                         <hr>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">步骤2</label>
-                            <span>执行init.sh文件</span>
+                            <label class="col-sm-1"></label>
+                            <label>执行init.sh文件</label>
                         </div>
                         <hr>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">步骤3</label>
-                            <span>使用本web项目</span>
+                            <label class="col-sm-1"></label>
+                            <label>使用本web项目</label>
                         </div>
                     </div>
                 </form>

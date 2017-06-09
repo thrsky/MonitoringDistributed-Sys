@@ -22,4 +22,6 @@ public interface WarnMessageMapper {
     boolean delete(long id);
 
     boolean stopMessage(long id);
+
+    boolean startMessage(long id);
 }

@@ -211,6 +211,18 @@ public class ApiController {
         return "redirect:/messageCenter";
     }
 
+    @GetMapping(value = "warnMessage/{id}/stop")
+    public String stopWarmMessage(@PathVariable("id") long id){
+        messageCenterService.stopWarmMessage(id);
+        return "redirect:/messageCenter";
+    }
+
+    @GetMapping(value = "warnMessage/{id}/start")
+    public String startWarmMessage(@PathVariable("id") long id){
+        messageCenterService.startwarnMessage(id);
+        return "redirect:/messageCenter";
+    }
+
     @PostMapping(value = "warnMessage/create")
     public String  createWarnMessage(WarnMessage warnMessage) {
         log.info("warnMessage={}", warnMessage);

@@ -9,6 +9,7 @@ import java.util.List;
  * Created by xjy on 2017/5/15.
  */
 public interface MessageCenterService {
+
     boolean sendEmail(String email, String msg);
 
     boolean sendSms(String phone, String msg);
@@ -21,6 +22,9 @@ public interface MessageCenterService {
 
     boolean deleteWarnMessage(long id);
 
+    boolean stopWarmMessage(long id);
+
+    boolean startwarnMessage(long id);
     long create(WarnMessage warnMessage);
 
     /**
