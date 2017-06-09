@@ -110,10 +110,11 @@
     $(function () {
         text.setMaxUsage("hello");
         console.log("ru kou");
-        table.setIp('${server.ip}');
+        <%--table.setIp('${server.ip}');--%>
+        table.setIp('115.159.206.169');
+        table.setTypeAndTimeType('cpu','OneDay');
         view.showCpuTable(10 * 1000);
         view.show();
-
     })
 </script>
 

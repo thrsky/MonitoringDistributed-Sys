@@ -23,4 +23,15 @@ public interface MessageCenterService {
 
     long create(WarnMessage warnMessage);
 
+    /**
+     * 对所有ip进行轮询，查看是否超额
+     * @return 超额的服务器详情
+     */
+    List<WarnMessage> shouldSendEmail();
+
+    /**
+     * 对报警的服务器发送信息
+     */
+    void sendEmail();
+
 }

@@ -1,12 +1,15 @@
 var table = {
-    ip: "127.0.0.1",
+    ip: "115.159.206.169",
     now: +new Date(1997, 9, 3),
     fake_value: Math.random() * 1000,
     chart: null,
     data: [],
     stopId: null,
     //默认为50个数据
-    dataLimitCount: 50,
+    dataLimitCount: 200,
+    type: 'cpu',
+    timetype: '15minutes',
+    perTime: 30 * 1000,
     getChart: function (divId) {
         table.chart = echarts.init(document.getElementById(divId));
         table.chart.showLoading();
@@ -16,12 +19,16 @@ var table = {
     setIp: function (ip) {
         table.ip = ip;
     },
+    setTypeAndTimeType: function (type, timeType) {
+        table.type = type;
+        table.timetype = timeType;
+    },
     url: {
-        heartbeat: function (type, timetype, num) {
-            return ["/api", table.ip, type, "info", timetype, num].join("/");
+        heartbeat: function (type, timetype) {
+            return ["/api", table.ip, type, "info", timetype].join("/");
         },
         init: function (type, timetype) {
-            return ["/api", table.ip, type, "init", timetype].join("/");
+            return ["/api", table.ip, type, "info", timetype].join("/");
         }
     },
     stop: function () {
@@ -37,10 +44,10 @@ var table = {
     start: function (time) {
         if (time == null) {
             console.log('time is null');
-            time = 2000;
+            time = table.perTime;
         }
         table.stopId = setInterval(function () {
-            table.getData(1, 1, 1);
+            table.getData(table.type, table.timetype);
         }, time);
     },
 
@@ -62,8 +69,9 @@ var table = {
      * @param timetype
      * @param num
      */
-    getData: function (type, timetype, num) {
-        $.get(table.url.heartbeat(type, timetype, num), {}, function (result) {
+    getData: function (type, timetype) {
+        $.get(table.url.heartbeat(type, timetype), {}, function (result) {
+            console.log(table.url.heartbeat(type, timetype));
             for (var i = 0, l = result.length; i < l; i++) {
                 // table.data.shift();
                 var time = new Date(result[i].time);
@@ -164,7 +172,7 @@ var table = {
             },
             series: [{
                 name: '模拟数据',
-                type: 'line',
+                type: 'bar',
                 showSymbol: true,
                 hoverAnimation: true,
                 connectNulls: true,
