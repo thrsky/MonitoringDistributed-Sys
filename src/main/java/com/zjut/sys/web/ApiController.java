@@ -3,10 +3,10 @@ package com.zjut.sys.web;
 import com.zjut.sys.dao.getCpuData;
 import com.zjut.sys.dao.impl.*;
 import com.zjut.sys.dto.*;
-import com.zjut.sys.pojo.EcsInfo;
+import com.zjut.sys.pojo.Ecs;
 import com.zjut.sys.pojo.WarnMessage;
+import com.zjut.sys.service.EcsInfoServer;
 import com.zjut.sys.service.MessageCenterService;
-import com.zjut.sys.service.impl.EcsInfoServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,15 +25,15 @@ public class ApiController {
 
 
     @Autowired
-    private EcsInfoServiceImpl ecsInfoService;
-    @Autowired
     private MessageCenterService messageCenterService;
+    @Autowired
+    private EcsInfoServer ecsInfoServer;
 
     @GetMapping(value = "/{ip}/info")
     @ResponseBody
-    public EcsInfo getInfo(@PathVariable("ip") String ip, Model model) {
-        EcsInfo ecsInfo = ecsInfoService.getEscInfo(ip);
-        return ecsInfo;
+    public Ecs getInfo(@PathVariable("ip") String ip, Model model) {
+        Ecs ecs = ecsInfoServer.getEscInfo(ip);
+        return ecs;
     }
 
     /**

@@ -1,30 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjut.sys.dao.WarnMessageMapper">
-    <select id="findById" resultType="WarnMessage">
-        select * from warn_message
-        where id = #{id}
-    </select>
-    <insert id="create">
-        insert into warn_message
-        (title,warn_line,type,item,email)
-        values(#{title},#{warnLine},#{type},#{item},#{email})
-    </insert>
-    <update id="update">
-        UPDATE warn_message
-        set title=#{title}
-        ,warn_line=#{warnLine}
-        ,type=#{type}
-        ,item=#{item}
-        ,email=#{email}
-        where id=#{id}
-    </update>
-    <delete id="delete">
-        delete from warn_message
-        WHERE id = #{id}
-    </delete>
-    <select id="getAll" resultType="WarnMessage">
-        select * from warn_message
-    </select>
+  <resultMap id="BaseResultMap" type="com.zjut.sys.pojo.WarnMessage">
+    <constructor>
+      <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="warnLine" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="item" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zjut.sys.pojo.WarnMessage">
+    insert into warnMessage (id, title, warnLine, 
+      type, status, item, 
+      email)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{warnline,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{item,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
+  </insert>
 
+  <select id="findById" resultType="WarnMessage">
+    SELECT * FROM warnMessage
+    WHERE id=#{id}
+  </select>
+
+  <insert id="create">
+    insert into warn_message
+    (title,warn_line,type,item,email)
+    values(#{title},#{warnLine},#{type},#{item},#{email})
+  </insert>
+  <update id="update">
+    UPDATE warn_message
+    set title=#{title}
+    ,warn_line=#{warnLine}
+    ,type=#{type}
+    ,item=#{item}
+    ,email=#{email}
+    where id=#{id}
+  </update>
+  <delete id="delete">
+    delete from warn_message
+    WHERE id = #{id}
+  </delete>
+
+  <select id="getAll" resultType="WarnMessage">
+    select * from warn_message
+  </select>
+
+  <insert id="insertSelective" parameterType="com.zjut.sys.pojo.WarnMessage">
+    insert into warnMessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="warnline != null">
+        warnLine,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="item != null">
+        item,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="warnline != null">
+        #{warnline,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="item != null">
+        #{item,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

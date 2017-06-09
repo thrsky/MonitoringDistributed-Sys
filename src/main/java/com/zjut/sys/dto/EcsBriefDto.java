@@ -79,4 +79,18 @@ public class EcsBriefDto {
     public void setOperation(String operation) {
         this.operation = operation;
     }
+
+    @Override
+    public String toString() {
+        return "EcsBriefDto{" +
+                "ip='" + ip + '\'' +
+                ", name='" + name + '\'' +
+                ", cpu='" + cpu + '\'' +
+                ", memory='" + memory + '\'' +
+                ", disk='" + disk + '\'' +
+                ", description='" + description + '\'' +
+                ", operation='" + operation + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

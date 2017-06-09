@@ -2,21 +2,22 @@ package com.zjut.sys.pojo;
 
 import lombok.Data;
 
-/**
- * 邮件、短信告警的消息
- * Created by xjy on 2017/6/3.
- */
 @Data
 public class WarnMessage {
-    long id;
-    String title;
+    private Long id;
 
-    //告警线 百分比的形式:13.9%
-    double warnLine;
-    int type;
-    boolean status;
-    String item;
-    String email;
+    private String title;
+
+    private Double warnline;
+
+    private Integer type;
+
+    private Byte status;
+
+    private String item;
+
+    private String email;
+
 
     public static enum TYPE {
         larger(1),
@@ -40,4 +41,6 @@ public class WarnMessage {
             return this.type;
         }
     }
+
+
 }
