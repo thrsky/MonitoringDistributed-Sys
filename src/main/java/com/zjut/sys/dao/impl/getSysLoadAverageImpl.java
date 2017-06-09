@@ -20,6 +20,7 @@ public class getSysLoadAverageImpl  implements getSysLoadAverage {
     List<String> data=null;
 
     public List<SysLoadAverageDto> get15minutesSysLoad(String ip) {
+        loadAverageDtos=new ArrayList<SysLoadAverageDto>();
         data=getData.get15Minutes(ip);
         for(String s:data){
             averageDto=getSysLoadFromData(ip);

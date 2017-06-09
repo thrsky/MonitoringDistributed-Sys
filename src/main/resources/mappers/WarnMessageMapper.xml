@@ -52,6 +52,12 @@
     WHERE id = #{id}
   </delete>
 
+  <update id="stopMessage">
+    UPDATE warnMessage
+    set status=0
+    WHERE id=#{id}
+  </update>
+
   <select id="getAll" resultType="WarnMessage">
     select * from warnMessage
   </select>

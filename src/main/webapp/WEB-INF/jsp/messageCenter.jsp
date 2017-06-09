@@ -57,7 +57,11 @@
                                    data-target="#myModal">
                                 编辑
                             </a>|<a type="button" class="warnMessageBtnDelete" id="${item.id}" data-toggle="modal"
-                                    data-target="#delete">删除</a></td>
+                                    data-target="#delete">删除</a>
+                                <a type="button" class="warnMessageBtnStop" id="${item.id}" data-toggle="modal"
+                                    data-target="#stop">暂停</a>
+                            </td>
+
                         </tr>
                     </c:forEach>
                     </tbody>
