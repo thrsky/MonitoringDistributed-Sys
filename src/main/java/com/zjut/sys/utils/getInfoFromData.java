@@ -117,8 +117,8 @@ public class getInfoFromData {
         Pattern pattern=Pattern.compile(expr);
         Matcher matcher=pattern.matcher(data);
         if(matcher.find()){
-            sysLoadAverageDto.setLoad(Double.parseDouble(matcher.group(1)));
-            sysLoadAverageDto.setDate(getDateFromData(data));
+            sysLoadAverageDto.setUsage(Double.parseDouble(matcher.group(1)));
+            sysLoadAverageDto.setTime(getDateFromData(data));
         }
         return sysLoadAverageDto;
     }
