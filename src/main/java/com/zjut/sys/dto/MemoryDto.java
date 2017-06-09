@@ -1,5 +1,7 @@
 package com.zjut.sys.dto;
 
+import java.util.Date;
+
 /**
  * Created by xjy on 2017/5/15.
  */
@@ -7,8 +9,27 @@ public class MemoryDto {
     private double MenToal;
     private double MenUsed;
     private double rate;
+    private Date date;
 
     public MemoryDto() {
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "MemoryDto{" +
+                "MenToal=" + MenToal +
+                ", MenUsed=" + MenUsed +
+                ", rate=" + rate +
+                ", date=" + date +
+                '}';
     }
 
     public double getMenToal() {
@@ -35,12 +56,4 @@ public class MemoryDto {
         this.rate = rate;
     }
 
-    @Override
-    public String toString() {
-        return "MemoryDto{" +
-                "MenToal=" + MenToal +
-                ", MenUsed=" + MenUsed +
-                ", rate=" + rate +
-                '}';
-    }
 }
