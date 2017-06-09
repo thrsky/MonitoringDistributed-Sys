@@ -1,68 +1,55 @@
 var table = {
     ip: "115.159.206.169",
-    now: +new Date(1997, 9, 3),
-    fake_value: Math.random() * 1000,
-    chart: null,
-    data: [],
-    stopId: null,
     //默认为50个数据
     dataLimitCount: 400,
-    type: 'cpu',
-    timetype: '15minutes',
     perTime: 30 * 1000,
     getChart: function (divId) {
-        table.chart = echarts.init(document.getElementById(divId));
-        table.chart.showLoading();
-        return table.chart;
+        var mychart = echarts.init(document.getElementById(divId));
+        mychart.showLoading();
+        return mychart;
     },
 
     setIp: function (ip) {
         table.ip = ip;
     },
-    setTypeAndTimeType: function (type, timeType) {
-        table.type = type;
-        table.timetype = timeType;
-    },
     url: {
-        heartbeat: function (type, timetype) {
-            return ["/api", table.ip, type, "info", timetype].join("/");
+        heartbeat: function (type) {
+            return ["/api", table.ip, type, "info", "1m"].join("/");
         },
         init: function (type, timetype) {
             return ["/api", table.ip, type, "info", timetype].join("/");
         }
     },
-    stop: function () {
-        console.log(table.stopId);
-        if (table.stopId != null) {
-            clearInterval(table.stopId);
+    stop: function (stopId) {
+        console.log(stopId);
+        if (stopId != null) {
+            clearInterval(stopId);
         }
     },
 
     /**
      *自动get获取数据
      */
-    start: function (time) {
-        if(table.timetype=='OneDay'){
-            table.getData(table.type, table.timetype);
+    start: function (chart,data,type,timetype) {
+        if(timetype=='OneDay'){
+            table.getData(chart,data,type, timetype);
+            chart.hideLoading();
         }else{
-            if (time == null) {
-                console.log('time is null');
-                time = table.perTime;
-                console.log("set time to " + table.perTime);
-            }
-            table.getInitData(table.type, table.timetype);
-            table.stopId = setInterval(function () {
-                table.getData(table.type, table.timetype);
-            }, time);
+            table.getInitData(chart,data,type,timetype);
+            chart.hideLoading();
+            var stopId = setInterval(function () {
+                table.getData(chart,data,type, timetype);
+            }, table.perTime);
+            return stopId;
         }
     },
 
     /**
      * 添加数据到table 中
      */
-    addData: function (data) {
+    addData: function (chart,data) {
         console.log("add data to table");
-        table.chart.setOption({
+        chart.setOption({
             series: [{
                 data: data
             }]
@@ -75,12 +62,11 @@ var table = {
      * @param timetype
      * @param num
      */
-    getData: function (type, timetype) {
+    getData: function (chart,data,type, timetype) {
         console.log("heart beat get data")
         $.get(table.url.heartbeat(type, timetype), {}, function (result) {
             console.log(table.url.heartbeat(type, timetype));
             for (var i = 0, l = result.length; i < l; i++) {
-                // table.data.shift();
                 var time = new Date(result[i].time);
                 var tdata = {
                     //tag
@@ -91,15 +77,15 @@ var table = {
                         result[i].usage
                     ]
                 };
-                while (table.data.length > table.dataLimitCount) {
-                    console.log("data size:" + table.data.length);
-                    table.data.shift();
+                while (data.length > dataLimitCount) {
+                    console.log("data size:" + data.length);
+                    data.shift();
                 }
-                table.data.push(tdata);
+                data.push(tdata);
             }
-            console.log(table.data);
+            console.log(data);
             console.log("try to add data");
-            table.addData(table.data);
+            table.addData(chart,data);
         });
 
     },
@@ -109,12 +95,11 @@ var table = {
      * @param type
      * @param timetype
      */
-    getInitData: function (type, timetype) {
+    getInitData: function (chart,data,type, timetype) {
         console.log("get init data");
         $.get(table.url.init(type, timetype), {}, function (result) {
             console.log("init-url:" + table.url.init(type, timetype));
             for (var i = 0, l = result.length; i < l; i++) {
-                // table.data.shift();
                 var time = new Date(result[i].time);
                 var tdata = {
                     //tag
@@ -125,16 +110,16 @@ var table = {
                         result[i].usage
                     ]
                 };
-                table.data.push(tdata);
+                data.push(tdata);
             }
-            console.log(table.data);
-            table.addData(table.data);
+            console.log(data);
+            table.addData(chart,data);
         });
     },
-    showTable: function (title) {
-        table.stop();
+    showTable: function (title,chart,data,type,timetype,stopId) {
+        table.stop(stopId);
         //重置data
-        table.data = [];
+        data=[]
         // 指定图表的配置项和数据
         var option = {
             title: {
@@ -170,65 +155,26 @@ var table = {
                 showSymbol: false,
                 hoverAnimation: true,
                 connectNulls: true,
-                data: table.data
+                data: data
             }]
         };
+        if(chart==null){
+            console.log("error: chart=null");
+            return;
+        }
 
-        var myChart = table.getChart("chart");
-        myChart.hideLoading();
-        myChart.setOption(option);
-        table.start();
+        chart.hideLoading();
+        chart.setOption(option);
+        table.start(chart,data,type,timetype);
     }
 }
 var view = {
-    showCpuTable: function () {
-        var title = "CPU运行状态";
-        table.setTypeAndTimeType('cpu', 'OneDay');
-        table.showTable(title);
-    },
-    showMemTable: function () {
-        var title = "内存运行状态";
-        table.setTypeAndTimeType('memory', 'OneDay');
-        table.showTable(title);
-    },
-    showDiskTable: function () {
-        var title = "磁盘运行状态";
-        table.setTypeAndTimeType('disk', 'OneDay');
-        table.showTable(title);
-    },
-    showSysTable:function () {
-        var title="系统负载情况";
-        table.setTypeAndTimeType('sysLoad','OneDay');
-        table.showTable(title);
-    },
-    showNetTable:function () {
-        var title="网络流情况";
-        table.setTypeAndTimeType('net','OneDay');
-        table.showTable(title);
-    },
     show: function () {
-        $('#showCpu').click(function () {
-            console.log(table.stopId);
-            view.showCpuTable();
-        });
-        $('#showMem').click(function () {
-            view.showMemTable();
-        });
-        $('#showDisk').click(function () {
-            view.showDiskTable();
-        });
-        $('#showNet').click(function () {
-            view.showNetTable();
-        });
-        $('#showSysLoad').click(function () {
-            view.showSysTable();
-        });
-        $('#stop_post').click(function () {
-            table.stop();
-        });
-        $('#start_post').click(function () {
-            table.start();
-        });
+        var chart0 = table.getChart('chart0');
+        var data0 = [];
+        var stopId = -1;
+        table.showTable("CPU运行状态",chart0,data0,'cpu','OneDay',stopId);
+
     }
 }
 var text = {

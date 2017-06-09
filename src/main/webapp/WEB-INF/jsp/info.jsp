@@ -80,13 +80,12 @@
                         <button class="btn btn-warning" id="start_post">start</button>
                     </div>
                     <div class="panel-body">
-                        <div id="chart${idx}" style="width: 1000px;height:400px;"></div>
+                        <div id="chart${idx.index}" style="width: 1000px;height:400px;"></div>
                     </div>
                 </div>
             </div>
         </div>
     </c:forEach>
-
 
     <div class="row">
         <div class="col-log-12">
@@ -118,9 +117,9 @@
         table.setIp('${server.ip}');
 //        table.setIp('115.159.206.169');
 //        table.setTypeAndTimeType('cpu','OneDay');
-        table.setTypeAndTimeType('cpu','15minutes');
-
-        view.showCpuTable();
+//        table.setTypeAndTimeType('cpu','15minutes');
+//
+//        view.showCpuTable();
         view.show();
     })
 </script>
