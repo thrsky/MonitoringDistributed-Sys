@@ -65,6 +65,9 @@ public class IndexController {
     public String messageCenter(Model model){
         List<WarnMessage> warnMessageList = messageCenterService.getWarnMessages();
         model.addAttribute("list",warnMessageList);
+        List<Ecs> serverList=ecsInfoServer.getEcsList();
+        model.addAttribute("serverList",serverList);
+
         return "messageCenter";
     }
 

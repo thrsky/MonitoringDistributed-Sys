@@ -56,7 +56,8 @@
                             <td><a type="button" class="warnMessageBtnUpdate" id="${item.id}" data-toggle="modal"
                                    data-target="#myModal">
                                 编辑
-                            </a>|<a>删除</a></td>
+                            </a>|<a type="button" class="warnMessageBtnDelete" id="${item.id}" data-toggle="modal"
+                                    data-target="#delete">删除</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -81,14 +82,25 @@
                     <div class="modal-body">
                         <%--<div class="form-group">--%>
                         <%--<label class="col-sm-2 control-label">id</label>--%>
-                            <%--<div class="col-sm-10">--%>
-                                <input type="hidden" name="id" id="modal_id"/>
-                            <%--</div>--%>
+                        <%--<div class="col-sm-10">--%>
+                        <input type="hidden" name="id" id="modal_id"/>
+                        <%--</div>--%>
                         <%--</div>--%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="modal_title" name="title" placeholder="title">
+                                <input type="text" class="form-control" id="modal_title" name="title"
+                                       placeholder="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">对指定服务器监控</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="ip" id="modal_ip_type">
+                                    <c:forEach var="server" items="${serverList}">
+                                        <option value="${server.ip}">${server.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -115,12 +127,12 @@
                                 <input type="text" name="warnLine" class="form-control" id="modal_percentage">
                             </div>
                         </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">发送到该邮箱</label>
-                                <div class="col-sm-10">
-                                    <input type="email" name="email" class="form-control" id="modal_email">
-                                </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">发送到该邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="email" class="form-control" id="modal_email">
                             </div>
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -134,7 +146,7 @@
     <div class="modal fade" id="new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" id="new_modal_form" method="post">
+                <form class="form-horizontal" id="new_modal_form" method="post" action="/api/warnMessage/create">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -150,7 +162,18 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new_modal_title" name="title" placeholder="title">
+                                <input type="text" class="form-control" id="new_modal_title" name="title"
+                                       placeholder="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">对指定服务器监控</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="ip" id="new_modal_ip_type">
+                                    <c:forEach var="server" items="${serverList}">
+                                        <option value="${server.ip}">${server.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -185,7 +208,6 @@
                         </div>
 
 
-
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="submit"/>
@@ -207,8 +229,8 @@
                     确认删除？
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a type="button" id="btn-confirm-delete" class="btn btn-primary">确认删除</a>
                 </div>
             </div>
         </div>
@@ -226,8 +248,13 @@
             $('#modal_monitor_type').val("cpu");
             $('#modal_type').val(result.type);
             $('#modal_email').val(result.email);
-            $('#modal_form').attr('action','/api/warnMessage/update');
+            $('#modal_form').attr('action', '/api/warnMessage/update');
         })
+    });
+    $(".warnMessageBtnDelete").click(function () {
+        console.log($(this).attr('id'));
+        var id = $(this).attr('id');
+        $('#btn-confirm-delete').attr('href', '/api/warnMessage/' + id + '/delete');
     });
 </script>
 

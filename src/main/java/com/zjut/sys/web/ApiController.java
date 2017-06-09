@@ -201,19 +201,19 @@ public class ApiController {
     public String updateWarnMessage(WarnMessage warnMessage) {
         log.info("warnMessage={}", warnMessage);
         messageCenterService.updateWarnMessage(warnMessage);
-        return "redirect:messageCenter";
+        return "redirect:/messageCenter";
     }
 
     @GetMapping(value = "warnMessage/{id}/delete")
     public String deleteWarnMessage(@PathVariable("id") long id) {
         messageCenterService.deleteWarnMessage(id);
-        return "redirect:messageCenter";
+        return "redirect:/messageCenter";
     }
 
     @PostMapping(value = "warnMessage/create")
     public String  createWarnMessage(WarnMessage warnMessage) {
         log.info("warnMessage={}", warnMessage);
-        messageCenterService.updateWarnMessage(warnMessage);
-        return "redirect:messageCenter";
+        messageCenterService.create(warnMessage);
+        return "redirect:/messageCenter";
     }
 }
