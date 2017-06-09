@@ -6,25 +6,32 @@ import lombok.Data;
 public class WarnMessage {
     private Long id;
 
+    private String ip;
+
     private String title;
 
-    private Double warnline;
+    //警戒线
+    private Double warnLine;
 
+    //
     private Integer type;
 
+    //
     private Byte status;
 
+    //cpu
     private String item;
 
     private String email;
 
-    public static enum TYPE {
+
+    public enum TYPE {
         larger(1),
         equal(0),
         smaller(-1);
         private int type;
 
-        private TYPE(int t) {
+        TYPE(int t) {
             this.type = t;
         }
 
@@ -41,5 +48,17 @@ public class WarnMessage {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "WarnMessage{" +
+                "id=" + id +
+                ", ip='" + ip + '\'' +
+                ", title='" + title + '\'' +
+                ", warnLine=" + warnLine +
+                ", type=" + type +
+                ", status=" + status +
+                ", item='" + item + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

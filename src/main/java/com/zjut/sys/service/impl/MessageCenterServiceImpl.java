@@ -1,7 +1,12 @@
 package com.zjut.sys.service.impl;
 
 import com.zjut.sys.dao.WarnMessageMapper;
+import com.zjut.sys.dao.getCpuData;
+import com.zjut.sys.dao.impl.getCpuDataImpl;
+import com.zjut.sys.dto.CpuDto;
+import com.zjut.sys.pojo.Ecs;
 import com.zjut.sys.pojo.WarnMessage;
+import com.zjut.sys.service.EcsInfoServer;
 import com.zjut.sys.service.MessageCenterService;
 import com.zjut.sys.util.Email;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +24,11 @@ import java.util.List;
 public class MessageCenterServiceImpl implements MessageCenterService {
     @Autowired
     WarnMessageMapper warnMessageMapper;
+    @Autowired
+    EcsInfoServer ecsInfoServer;
+    @Autowired
+    getCpuData getCpuData;
+
 
     public boolean sendEmail(String email, String msg) {
         return false;
@@ -52,8 +62,31 @@ public class MessageCenterServiceImpl implements MessageCenterService {
     public List<WarnMessage> shouldSendEmail() {
         //拉下服务器列表
         //轮询服务器列表，判断有没有异常
-
-        return null;
+        List<WarnMessage> messages=warnMessageMapper.getAll();
+        List<Ecs> ecs= ecsInfoServer.getEcsList();
+        getCpuData=new getCpuDataImpl();
+//        List<String> data;
+        List<CpuDto> cpuDtos;
+//        String /ip;
+        List<WarnMessage> res=new ArrayList<WarnMessage>();
+//        WarnMessage warnMessage;
+        for(WarnMessage s:messages){
+            cpuDtos=getCpuData.get15MinCpu(s.getIp());
+            CpuDto dto=getCpuData.get1Cpu(s.getIp());
+            if(dto.getUsage()>=s.getWarnLine())
+                res.add(s);
+//            A:
+//            for(CpuDto dto:cpuDtos){
+////                System.out.println("实际上："+dto.getUsage()+"  警戒值："+s.getWarnLine());
+//                if(dto.getUsage()>=s.getWarnLine()){
+////                    System.out.println("实际上："+dto.getUsage()+"  警戒值："+s.getWarnLine());
+////                    System.out.println("找到一个: "+dto.getUsage());
+//                    res.add(s);
+//                    break A;
+//                }
+//            }
+        }
+        return res;
     }
 
     public void sendEmail() {

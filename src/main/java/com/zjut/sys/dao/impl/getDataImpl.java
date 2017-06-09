@@ -49,13 +49,16 @@ public class getDataImpl implements getData {
         return data;
     }
 
-    public List<String> getSevenDayData(String ip) {
-        return null;
+    public String get1Data(String ip) {
+        try{
+            jedis=redisUtil.getJedis();
+        }catch (Exception e){
+            logger.error(redisValue.REDIS_ERROR.getData());
+        }
+        String data=jedis.lindex(ip,0);
+        return data;
     }
 
-    public List<String> getHalfMonthData(String ip) {
-        return null;
-    }
 
     public static void main(String[] args) {
         String ip="115.159.206.169";
