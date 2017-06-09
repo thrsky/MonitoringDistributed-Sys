@@ -31,8 +31,10 @@ var table = {
      *自动get获取数据
      */
     start: function (chart,data,type,timetype) {
-        if(timetype=='OneDay'){
-            table.getData(chart,data,type, timetype);
+        console.log("start[]timetype="+timetype);
+        if(timetype=='1d'){
+            console.log("it is 1d");
+            table.getInitData(chart,data,type, timetype);
             chart.hideLoading();
         }else{
             table.getInitData(chart,data,type,timetype);
@@ -77,7 +79,7 @@ var table = {
                         result[i].usage
                     ]
                 };
-                while (data.length > dataLimitCount) {
+                while (data.length > table.dataLimitCount) {
                     console.log("data size:" + data.length);
                     data.shift();
                 }
@@ -173,7 +175,7 @@ var view = {
         var chart0 = table.getChart('chart0');
         var data0 = [];
         var stopId = -1;
-        table.showTable("CPU运行状态",chart0,data0,'cpu','OneDay',stopId);
+        table.showTable("CPU运行状态",chart0,data0,'cpu','1d',stopId);
 
     }
 }
