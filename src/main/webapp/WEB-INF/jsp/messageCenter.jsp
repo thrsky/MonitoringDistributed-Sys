@@ -31,7 +31,11 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">告警规则列表</div>
+                <div class="panel-heading">告警规则列表
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new">
+                        new Message
+                    </button>
+                </div>
 
                 <!-- Table -->
                 <table class="table">
@@ -48,6 +52,7 @@
                         <tr>
                             <th scope="row">${item.id}</th>
                             <td>${item.title}</td>
+                            <td>${item.status}</td>
                             <td><a type="button" class="warnMessageBtnUpdate" id="${item.id}" data-toggle="modal"
                                    data-target="#myModal">
                                 编辑
@@ -58,12 +63,8 @@
                 </table>
             </div>
         </div>
-
     </div>
-
-
     <!--/.row-->
-
     <!--/.main-->
     <%@include file="common/tail.jsp" %>
 
@@ -120,6 +121,68 @@
                                     <input type="email" name="email" class="form-control" id="modal_email">
                                 </div>
                             </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="submit"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" id="new_modal_form" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">告警规则</h4>
+                    </div>
+                    <div class="modal-body">
+                        <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">id</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                        <input type="hidden" name="id" id="modal_id"/>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new_modal_title" name="title" placeholder="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">监控项目</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="item" id="new_modal_monitor_type">
+                                    <option value="cpu">cpu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">方式</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="type" id="new_modal_type">
+                                    <option value="1">大于</option>
+                                    <option value="0">等于</option>
+                                    <option value="-1">小于</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">百分比</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="warnLine" class="form-control" id="new_modal_percentage">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">发送到该邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="email" class="form-control" id="new_modal_email">
+                            </div>
+                        </div>
 
 
 
