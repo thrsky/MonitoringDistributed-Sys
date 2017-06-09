@@ -65,26 +65,13 @@ public class MessageCenterServiceImpl implements MessageCenterService {
         List<WarnMessage> messages=warnMessageMapper.getAll();
         List<Ecs> ecs= ecsInfoServer.getEcsList();
         getCpuData=new getCpuDataImpl();
-//        List<String> data;
-        List<CpuDto> cpuDtos;
-//        String /ip;
         List<WarnMessage> res=new ArrayList<WarnMessage>();
 //        WarnMessage warnMessage;
         for(WarnMessage s:messages){
-            cpuDtos=getCpuData.get15MinCpu(s.getIp());
+//            cpuDtos=getCpuData.get15MinCpu(s.getIp());
             CpuDto dto=getCpuData.get1Cpu(s.getIp());
             if(dto.getUsage()>=s.getWarnLine())
                 res.add(s);
-//            A:
-//            for(CpuDto dto:cpuDtos){
-////                System.out.println("实际上："+dto.getUsage()+"  警戒值："+s.getWarnLine());
-//                if(dto.getUsage()>=s.getWarnLine()){
-////                    System.out.println("实际上："+dto.getUsage()+"  警戒值："+s.getWarnLine());
-////                    System.out.println("找到一个: "+dto.getUsage());
-//                    res.add(s);
-//                    break A;
-//                }
-//            }
         }
         return res;
     }
