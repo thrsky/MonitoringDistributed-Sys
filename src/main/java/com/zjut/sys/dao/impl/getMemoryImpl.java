@@ -41,4 +41,12 @@ public class getMemoryImpl implements getMemory {
         }
         return res;
     }
+
+    public MemoryDto getMemory(String ip) {
+        getData=new getDataImpl();
+        MemoryDto memoryDto=null;
+        String da=getData.get1Data(ip);
+        memoryDto=getMemFromData(da);
+        return memoryDto;
+    }
 }

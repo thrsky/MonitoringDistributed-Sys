@@ -3,17 +3,14 @@ package com.zjut.sys.dao.impl;
 import com.zjut.sys.dao.getCpuData;
 import com.zjut.sys.dto.CpuDto;
 import com.zjut.sys.utils.getInfoFromData;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by thRShy on 2017/5/19.
  */
-@Slf4j
 public class getCpuDataImpl implements getCpuData {
 
     @Autowired
@@ -24,12 +21,10 @@ public class getCpuDataImpl implements getCpuData {
         List<String> data=getData.getOneDayData(ip);
         List<CpuDto> res=new ArrayList<CpuDto>(144);
         CpuDto cpuDto=null;
-        log.info("start={}",new Date());
         for(String da:data){
             cpuDto=getInfoFromData.getCpuFromData(da);
             res.add(cpuDto);
         }
-        log.info("end={}",new Date());
         return res;
     }
 
@@ -47,6 +42,14 @@ public class getCpuDataImpl implements getCpuData {
             res.add(cpuDto);
         }
         return res;
+    }
+
+    public CpuDto get1Cpu(String ip) {
+        getData=new getDataImpl();
+        String data=getData.get1Data(ip);
+        CpuDto cpuDto=null;
+        cpuDto=getInfoFromData.getCpuFromData(data);
+        return cpuDto;
     }
 
 }

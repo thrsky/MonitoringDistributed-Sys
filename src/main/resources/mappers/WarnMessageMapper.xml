@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="com.zjut.sys.pojo.WarnMessage">
     <constructor>
       <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="warnLine" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="warnLine" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="item" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,10 +14,10 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.zjut.sys.pojo.WarnMessage">
-    insert into warnMessage (id, title, warnLine, 
+    insert into warnMessage (id, ip, title, warnLine,
       type, status, item, 
       email)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{warnLine,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT},#{ip,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{warnline,jdbcType=VARCHAR},
       #{type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{item,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR})
   </insert>
@@ -26,27 +27,33 @@
     WHERE id=#{id}
   </select>
 
+  <select id="findByIp" resultType="WarnMessage">
+    SELECT * FROM warnMessage
+    WHERE ip=#{ip}
+  </select>
+
   <insert id="create">
-    insert into warn_message
-    (title,warn_line,type,item,email)
-    values(#{title},#{warnLine},#{type},#{item},#{email})
+    insert into warnMessage
+    (ip,title,warnLine,type,item,email)
+    values(#{ip},#{title},#{warnLine},#{type},#{item},#{email})
   </insert>
   <update id="update">
-    UPDATE warn_message
-    set title=#{title}
-    ,warn_line=#{warnLine}
+    UPDATE warnMessage
+    set ip=#{ip}
+    ,title=#{title}
+    ,warnLine=#{warnLine}
     ,type=#{type}
     ,item=#{item}
     ,email=#{email}
     where id=#{id}
   </update>
   <delete id="delete">
-    delete from warn_message
+    delete from warnMessage
     WHERE id = #{id}
   </delete>
 
   <select id="getAll" resultType="WarnMessage">
-    select * from warn_message
+    select * from warnMessage
   </select>
 
   <insert id="insertSelective" parameterType="com.zjut.sys.pojo.WarnMessage">
@@ -54,6 +61,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="ip != null">
+        ip,
       </if>
       <if test="title != null">
         title,
@@ -77,6 +87,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},

@@ -11,6 +11,8 @@ import java.util.List;
 public interface getNet {
     public List<netInDto> get15MinuteNetIn(String ip);
     public List<netOutDto> get15MinuteNetOut(String ip);
+    public netInDto getNetIn(String ip);
     public List<netInDto> getOneDayNetIn(String ip);
     public List<netOutDto> getOneDayNetOut(String ip);
+    public netOutDto getNetOut(String ip);
 }

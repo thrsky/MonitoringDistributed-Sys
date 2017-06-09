@@ -11,8 +11,9 @@ import java.util.List;
 public interface getDisk {
     public List<DiskWriteDto> get15minuteDiskWrite(String ip);
     public List<DiskReadDto> get15minuteDiskRead(String ip);
-
+    public DiskReadDto getDiskRead(String ip);
     public List<DiskWriteDto> getOneDayDiskWrite(String ip);
     public List<DiskReadDto> getOneDayDiskRead(String ip);
+    public DiskWriteDto getDiskWrite(String ip);
 
 }

@@ -1,10 +1,17 @@
 package com.zjut.sys.service.impl;
 
 import com.zjut.sys.dao.WarnMessageMapper;
+import com.zjut.sys.dao.getCpuData;
+import com.zjut.sys.dao.impl.getCpuDataImpl;
+import com.zjut.sys.dto.CpuDto;
+import com.zjut.sys.pojo.Ecs;
 import com.zjut.sys.pojo.WarnMessage;
+import com.zjut.sys.service.EcsInfoServer;
 import com.zjut.sys.service.MessageCenterService;
 import com.zjut.sys.util.Email;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +26,13 @@ import java.util.List;
 public class MessageCenterServiceImpl implements MessageCenterService {
     @Autowired
     WarnMessageMapper warnMessageMapper;
+    @Autowired
+    EcsInfoServer ecsInfoServer;
+    @Autowired
+    getCpuData getCpuData;
+
+    Logger logger= LoggerFactory.getLogger(this.getClass());
+
 
     public boolean sendEmail(String email, String msg) {
         return false;
@@ -52,22 +66,33 @@ public class MessageCenterServiceImpl implements MessageCenterService {
     public List<WarnMessage> shouldSendEmail() {
         //拉下服务器列表
         //轮询服务器列表，判断有没有异常
-
-        return null;
+        List<WarnMessage> messages=warnMessageMapper.getAll();
+        List<Ecs> ecs= ecsInfoServer.getEcsList();
+        getCpuData=new getCpuDataImpl();
+        List<WarnMessage> res=new ArrayList<WarnMessage>();
+//        WarnMessage warnMessage;
+        for(WarnMessage s:messages){
+//            cpuDtos=getCpuData.get15MinCpu(s.getIp());
+            CpuDto dto=getCpuData.get1Cpu(s.getIp());
+            if(dto.getUsage()>=s.getWarnLine())
+                res.add(s);
+        }
+        return res;
     }
 
     public void sendEmail() {
         try {
-            MessageCenterService messageCenterService = new MessageCenterServiceImpl();
-            List<WarnMessage> warnMessageList = messageCenterService.shouldSendEmail();
+            List<WarnMessage> warnMessageList = this.shouldSendEmail();
             for (WarnMessage warnMessage : warnMessageList) {
                 String rece = warnMessage.getEmail();
-                String title = warnMessage.getTitle();
-                String content = "你的服务器"+ warnMessage.getItem() + "用量大于" + warnMessage.getWarnLine();
+                String title = "你之前设定的报警信息 ： "+warnMessage.getTitle();
+                String content = "你的服务器"+ warnMessage.getItem() + "用量大于" + warnMessage.getWarnLine()+". 请及时查看你的服务器";
+                logger.info("我要发邮件了");
                 Email.sendMail("15957180610@163.com", "15957180610@163.com", "xujunyu520",
                         rece,
                         title,
                         content);
+                System.out.println("发送了一份邮件");
             }
         } catch (Exception e) {
             log.error("send mail fail , cause={}", e.getMessage());

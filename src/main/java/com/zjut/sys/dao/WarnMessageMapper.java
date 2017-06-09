@@ -15,6 +15,8 @@ public interface WarnMessageMapper {
 
     WarnMessage findById(long id);
 
+    WarnMessage findByIp(String ip);
+
     boolean update(WarnMessage warnMessage);
 
     boolean delete(long id);

@@ -11,4 +11,5 @@ import java.util.List;
 public interface getMemory {
     public List<MemoryDto> get15MinMen(String ip);
     public List<MemoryDto> get1Day(String ip);
+    public MemoryDto getMemory(String ip);
 }

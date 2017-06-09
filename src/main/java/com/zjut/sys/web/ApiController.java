@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +48,14 @@ public class ApiController {
     @ResponseBody
     public List<SysLoadAverageDto> getSysLoadAverage(@PathVariable("ip") String ip,
                                                @PathVariable("mode") String mode){
-        List<SysLoadAverageDto> res=null;
+        List<SysLoadAverageDto> res=new ArrayList<SysLoadAverageDto>();
         getSysLoadAverageImpl getSysLoadAverage=new getSysLoadAverageImpl();
-        if(mode.equals("15minutes")){
+        if(mode.equals("2h")){
             res=getSysLoadAverage.get15minutesSysLoad(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getSysLoadAverage.getOneDaySysLoad(ip);
+        }else if(mode.equals("1m")){
+            res.add(getSysLoadAverage.getSysLoad(ip));
         }
         return res;
     }
@@ -67,13 +70,15 @@ public class ApiController {
     @ResponseBody
     public List<CpuDto> getCpuData(@PathVariable("ip") String ip,
                                    @PathVariable("mode") String mode){
-        List<CpuDto> res = null;
+        List<CpuDto> res = new ArrayList<CpuDto>();
         getCpuData getCpuData=new getCpuDataImpl();
         log.info("cpu mvc s={}",new Date());
-        if(mode.equals("15minutes")){
+        if(mode.equals("2h")){
             res=getCpuData.get15MinCpu(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getCpuData.get1DaysCpu(ip);
+        }else if(mode.equals("1m")){
+            res.add(getCpuData.get1Cpu(ip));
         }
         log.info("cpu mvc e={}",new Date());
         return res;
@@ -91,12 +96,14 @@ public class ApiController {
     public List<MemoryDto> getMemoryData(@PathVariable("ip") String ip,
                                          @PathVariable("mode") String mode
     ) {
-        List<MemoryDto> res=null;
+        List<MemoryDto> res=new ArrayList<MemoryDto>();
         getMemoryImpl getMemory=new getMemoryImpl();
-        if(mode.equals("15minutes")){
+        if(mode.equals("2h")){
             res=getMemory.get15MinMen(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getMemory.get1Day(ip);
+        }else if(mode.equals("1m")){
+            res.add(getMemory.getMemory(ip));
         }
         return res;
     }
@@ -112,11 +119,13 @@ public class ApiController {
     public List<netInDto> getNetInData(@PathVariable("ip")String ip,
                                        @PathVariable("mode")String mode){
         getNetImpl getNet=new getNetImpl();
-        List<netInDto> res=null;
-        if(mode.equals("15minutes")){
+        List<netInDto> res=new ArrayList<netInDto>();
+        if(mode.equals("2h")){
             res=getNet.get15MinuteNetIn(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getNet.getOneDayNetIn(ip);
+        }else if(mode.equals("1m")){
+            res.add(getNet.getNetIn(ip));
         }
         return res;
     }
@@ -132,11 +141,13 @@ public class ApiController {
     public List<netOutDto> getNetOutData(@PathVariable("ip") String ip,
                                          @PathVariable("mode") String mode){
         getNetImpl getNet=new getNetImpl();
-        List<netOutDto> res=null;
-        if(mode.equals("15minutes")){
+        List<netOutDto> res=new ArrayList<netOutDto>();
+        if(mode.equals("2h")){
             res=getNet.get15MinuteNetOut(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getNet.getOneDayNetOut(ip);
+        }else if(mode.equals("1m")){
+            res.add(getNet.getNetOut(ip));
         }
         return res;
     }
@@ -147,11 +158,13 @@ public class ApiController {
     public List<DiskReadDto> getDiskReadData(@PathVariable("ip") String ip,
                                             @PathVariable("mode") String mode){
         getDiskImpl getDisk=new getDiskImpl();
-        List<DiskReadDto> res=null;
-        if(mode.equals("15minutes")){
+        List<DiskReadDto> res=new ArrayList<DiskReadDto>();
+        if(mode.equals("2h")){
             res= getDisk.get15minuteDiskRead(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getDisk.getOneDayDiskRead(ip);
+        }else if(mode.equals("1m")){
+            res.add(getDisk.getDiskRead(ip));
         }
         return res;
     }
@@ -167,11 +180,13 @@ public class ApiController {
     public List<DiskWriteDto> getDiskWriteData(@PathVariable("ip") String ip,
                                               @PathVariable("mode") String mode){
         getDiskImpl getDisk=new getDiskImpl();
-        List<DiskWriteDto> res=null;
-        if(mode.equals("15minutes")){
+        List<DiskWriteDto> res=new ArrayList<DiskWriteDto>();
+        if(mode.equals("2h")){
             res=getDisk.get15minuteDiskWrite(ip);
-        }else if(mode.equals("OneDay")){
+        }else if(mode.equals("1d")){
             res=getDisk.getOneDayDiskWrite(ip);
+        }else if(mode.equals("1m")){
+            res.add(getDisk.getDiskWrite(ip));
         }
         return res;
     }

@@ -45,6 +45,14 @@ public class getNetImpl implements getNet {
         return outDtos;
     }
 
+    public netInDto getNetIn(String ip) {
+        getData=new getDataImpl();
+        netInDto inDto;
+        String da=getData.get1Data(ip);
+        inDto=getNetInFromData(da);
+        return inDto;
+    }
+
     public List<netInDto> getOneDayNetIn(String ip) {
         inDtos=new ArrayList<netInDto>(144);
         getData=new getDataImpl();
@@ -67,5 +75,13 @@ public class getNetImpl implements getNet {
             outDtos.add(netOutDto);
         }
         return outDtos;
+    }
+
+    public netOutDto getNetOut(String ip) {
+        getData=new getDataImpl();
+        netOutDto outDto;
+        String da=getData.get1Data(ip);
+        outDto=getNetOutFromData(da);
+        return outDto;
     }
 }

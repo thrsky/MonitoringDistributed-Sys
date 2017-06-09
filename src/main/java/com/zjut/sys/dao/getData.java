@@ -12,7 +12,5 @@ public interface getData {
 
     public List<String > getOneDayData(String ip);
 
-    public List<String > getSevenDayData(String ip);
-
-    public List<String > getHalfMonthData(String ip);
+    public String get1Data(String ip);
 }

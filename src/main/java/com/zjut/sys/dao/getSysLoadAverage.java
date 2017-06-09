@@ -11,4 +11,5 @@ import java.util.List;
 public interface getSysLoadAverage {
     public List<SysLoadAverageDto> get15minutesSysLoad(String ip);
     public List<SysLoadAverageDto> getOneDaySysLoad(String ip);
+    public SysLoadAverageDto getSysLoad(String ip);
 }
