@@ -102,6 +102,7 @@ public class MessageCenterServiceImpl implements MessageCenterService {
             }
         } catch (Exception e) {
             log.error("send mail fail , cause={}", e.getMessage());
+            e.printStackTrace();
         }
     }
 }
