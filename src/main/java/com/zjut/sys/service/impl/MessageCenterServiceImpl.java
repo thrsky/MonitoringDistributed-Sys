@@ -24,6 +24,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class MessageCenterServiceImpl implements MessageCenterService {
+
     @Autowired
     WarnMessageMapper warnMessageMapper;
     @Autowired
@@ -71,7 +72,7 @@ public class MessageCenterServiceImpl implements MessageCenterService {
 
     public List<WarnMessage> shouldSendEmail() {
         //拉下服务器列表
-        //轮询服务器列表，判断有没有异常
+        //轮询服务器列表，判断有没有异常\
         List<WarnMessage> messages=warnMessageMapper.getAll();
         List<Ecs> ecs= ecsInfoServer.getEcsList();
         getCpuData=new getCpuDataImpl();
@@ -80,8 +81,11 @@ public class MessageCenterServiceImpl implements MessageCenterService {
         for(WarnMessage s:messages){
 //            cpuDtos=getCpuData.get15MinCpu(s.getIp());
             CpuDto dto=getCpuData.get1Cpu(s.getIp());
-            if(dto.getUsage()>=s.getWarnLine()&&s.getStatus()==1)
+            if(dto.getUsage()>=s.getWarnLine()&&s.getStatus()==1){
+                System.out.println("logger : ============================= found a warn message ");
                 res.add(s);
+            }
+
         }
         return res;
     }
@@ -101,6 +105,7 @@ public class MessageCenterServiceImpl implements MessageCenterService {
                 System.out.println("发送了一份邮件");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("send mail fail , cause={}", e.getMessage());
         }
     }

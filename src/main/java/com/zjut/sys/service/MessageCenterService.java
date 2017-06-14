@@ -1,6 +1,7 @@
 package com.zjut.sys.service;
 
 import com.zjut.sys.pojo.WarnMessage;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import java.util.List;
  * 消息中心
  * Created by xjy on 2017/5/15.
  */
+@Service
 public interface MessageCenterService {
 
     boolean sendEmail(String email, String msg);

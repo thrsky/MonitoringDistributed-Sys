@@ -1,10 +1,13 @@
 package com.zjut.sys.util;
 
+import com.zjut.sys.dao.WarnMessageMapper;
+import com.zjut.sys.pojo.WarnMessage;
 import com.zjut.sys.service.MessageCenterService;
-import com.zjut.sys.service.impl.MessageCenterServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 public class Timer {
-    private MessageCenterService messageCenterService=new MessageCenterServiceImpl();
+    @Autowired
+    WarnMessageMapper warnMessageMapper;
+    @Autowired
+    private MessageCenterService messageCenterService;
     private ScheduledExecutorService scheduler = Executors
             .newScheduledThreadPool(1);
 
@@ -24,6 +30,8 @@ public class Timer {
             public void run() {
                 //具体操作
                 log.info("Timer[][][]executeTimer[][][]timer is run");
+                List<WarnMessage> all=warnMessageMapper.getAll();
+                List<WarnMessage> res=messageCenterService.shouldSendEmail();
                 messageCenterService.sendEmail();
             }
         };
